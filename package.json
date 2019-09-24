@@ -1,7 +1,7 @@
 {
   "name": "wso-recommender-frontend",
   "version": "0.1.0",
-  "description": "",
+  "description": "Frontend for the recommendation engine developed in the Javascript Technology 2019 seminar at Rostlab/TUM",
   "main": "dist/index.js",
   "umd:main": "dist/index.umd.js",
   "module": "dist/index.m.js",
