@@ -18,6 +18,7 @@ export default (config, env, helpers) => {
         defaults: true
     }));
 
+    // Mock API
     config.devServer.before = function (app) {
         app.use(apiMocker('/api', 'api-mocks/'))
     }
