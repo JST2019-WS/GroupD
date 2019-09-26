@@ -10,7 +10,6 @@ function renderColored(classname, value) {
  */
 export default class StockDetail extends Component {
     render({stock}, {}) {
-        console.log(stock)
         if(!stock) {
             return null
         }

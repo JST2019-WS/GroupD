@@ -7,3 +7,9 @@ td {
         color: darkred;
     }
 }
+
+tr {
+    &[class *= '--highlight'] {
+        color: lightgreen;
+    }
+}

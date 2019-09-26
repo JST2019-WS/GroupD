@@ -1,5 +1,5 @@
 import { h, Component } from "preact";
-import "./style.scss";
+import style from "./style.module.scss";
 import StockTableRow from "../stock-table-row";
 
 /**
@@ -9,8 +9,8 @@ export default class StockTable extends Component {
 
     render({stocks, onStockClicked = () => {}, onStockHovered}, {}) {
         return (
-            <table class="stock-table">
-                <thead class="stock-table-head">
+            <table className={style['stock-table']}>
+                <thead className={style['stock-table-head']}>
                     <tr>
                         <th>Wertpapier</th>
                         <th>Branche</th>
@@ -22,7 +22,7 @@ export default class StockTable extends Component {
                         <th>Umsatz</th>
                     </tr>
                 </thead>
-                <tbody class="stock-table-body">
+                <tbody className={style['stock-table-body']}>
                     {(stocks ? stocks : []).map(stock => (
                         <StockTableRow
                             stock={stock}

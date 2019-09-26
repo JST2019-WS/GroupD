@@ -31,9 +31,11 @@ export default class RecommendedRecommendedStocks extends Component {
     }
 
     stockClicked(stock, evt) {
-        this.setState((state, props) => ({
-            selected: (state.selected && stock.id === state.selected.id) ? null : stock
-        }));
+        this.setState((state, props) => {
+            return {
+                selected: (state.selected && stock.id === state.selected.id) ? null : stock,
+            }
+        });
         const navigate = evt.target.tagName.toLowerCase() === 'a';
         // Send post
         fetch(`${process.env.FEEDBACK_ENDPOINT}${encodeURIComponent(this.props.user)}`, {
