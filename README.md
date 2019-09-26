@@ -20,3 +20,10 @@ running
 ```
 npm run dev
 ```
+
+## Testing
+
+To test the application run
+```
+npm run test
+```
