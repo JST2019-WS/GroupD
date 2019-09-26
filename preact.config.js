@@ -14,12 +14,14 @@ export default (config, env, helpers) => {
 
     // Add support for .env files
     config.plugins.push(new Dotenv({
-        path: env.production ? './production.end' : './.development.env',
+        path: env.production ? './.production.env' : './.development.env',
         defaults: true
     }));
 
     // Mock API
-    config.devServer.before = function (app) {
-        app.use(apiMocker('/api', 'api-mocks/'))
+    if(!env.production) {
+        config.devServer.before = function (app) {
+            app.use(apiMocker('/api', 'api-mocks/'))
+        }
     }
 };
