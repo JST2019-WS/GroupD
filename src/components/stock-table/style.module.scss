@@ -1,0 +1,19 @@
+.stock-table {
+    th, td {
+        text-align: left;
+    }
+
+    .stock-table-head {
+        tr {
+            background-color: darkgreen;
+        }
+    }
+
+    .stock-table-body {
+            tr {
+                .selected, &:hover {
+                    background-color: lightgreen;
+                }
+            }
+    }
+}

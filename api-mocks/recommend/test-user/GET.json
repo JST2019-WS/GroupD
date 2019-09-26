@@ -1,6 +1,70 @@
 [
     {
         "id": 1,
-        "name": "WSO"
+        "stock": {
+            "name": "Deutsche Pfandbriefbank",
+            "url": "https://www.wallstreet-online.de/aktien/deutsche-pfandbriefbank-aktie"
+        },
+        "category": {
+            "name": "Banken",
+            "url": "https://www.wallstreet-online.de/aktien/branche/banken-aktien"
+        },
+        "value": 10.71,
+        "absolute": -0.26,
+        "relative": -2.37,
+        "updated_at": 1569426392,
+        "exchange": "LAS",
+        "revenue": 35729.21
+    },
+    {
+        "id": 2,
+        "stock": {
+            "name": "Commerzbank",
+            "url": "https://www.wallstreet-online.de/aktien/commerzbank-aktie"
+        },
+        "category": {
+            "name": "Banken",
+            "url": "https://www.wallstreet-online.de/aktien/branche/banken-aktien"
+        },
+        "value": 5.37,
+        "absolute": 0.139,
+        "relative": 2.67,
+        "updated_at": 1569426396,
+        "exchange": "LAS",
+        "revenue": 549032.512
+    },
+    {
+        "id": 3,
+        "stock": {
+            "name": "New Work",
+            "url": "https://www.wallstreet-online.de/aktien/new-work-aktie"
+        },
+        "category": {
+            "name": "Software und Internet",
+            "url": "https://www.wallstreet-online.de/aktien/branche/software-internet-aktien"
+        },
+        "value": 263,
+        "absolute": -9,
+        "relative": -2.94,
+        "updated_at": 1569426512,
+        "exchange": "ETR",
+        "revenue": 527432
+    },
+    {
+        "id": 4,
+        "stock": {
+            "name": "Telefonica Deutschland Holding",
+            "url": "https://www.wallstreet-online.de/aktien/telefonica-deutschland-holding-aktie"
+        },
+        "category": {
+            "name": "Telekommunikation",
+            "url": "https://www.wallstreet-online.de/aktien/branche/telekommunikation-aktien"
+        },
+        "value": 2501.63,
+        "absolute": -0.33,
+        "relative": -0.20,
+        "updated_at": 1569426741,
+        "exchange": "ETR",
+        "revenue": 9917847.5
     }
 ]

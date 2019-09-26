@@ -1,0 +1,15 @@
+td {
+    &[class *= '--positive'] {
+        color: darkgreen;
+    }
+
+    &[class *= '--negative'] {
+        color: darkred;
+    }
+}
+
+tr {
+    &[class *= '--highlight'] {
+        color: lightgreen;
+    }
+}
