@@ -34,6 +34,7 @@ export default class RecommendedRecommendedStocks extends Component {
         this.setState((state, props) => ({
             selected: (state.selected && stock.id === state.selected.id) ? null : stock
         }));
+        const navigate = evt.target.tagName.toLowerCase() === 'a';
         // Send post
         fetch(`${process.env.FEEDBACK_ENDPOINT}${encodeURIComponent(this.props.user)}`, {
             method: 'POST',
@@ -43,14 +44,15 @@ export default class RecommendedRecommendedStocks extends Component {
             },
             body: {
                 choice: stock,
-                offered: this.state.recommendation.map((stock) => ( stock.id ))
+                offered: this.state.recommendation.map((stock) => ( stock.id )),
+                switchedPage: navigate
             }
         }).then((resp) => {
             console.log(`Pushed choice to server!`);
             console.log(resp);
         }).finally(() => {
-            if(evt.target.tagName.toLowerCase() === 'a') {
-                window.open(stock.stock.url);
+            if(navigate) {
+                window.location = stock.stock.url;
             }
         })
     }
