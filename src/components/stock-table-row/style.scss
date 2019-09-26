@@ -1,9 +1,9 @@
 td {
-    [class *= '--positive'] {
+    &[class *= '--positive'] {
         color: darkgreen;
     }
 
-    [class *= '--negative'] {
+    &[class *= '--negative'] {
         color: darkred;
     }
 }

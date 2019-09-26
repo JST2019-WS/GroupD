@@ -19,8 +19,8 @@ export default class StockTableRow extends Component {
                 </td>
                 <td class='stock-table-row__category'><a href={stock.category.url}>{stock.category.name}</a></td>
                 <td class='stock-table-row__value'>{stock.value} EUR</td>
-                <td class={renderColored('stock-table-row__absolute')}>{stock.absolute} EUR</td>
-                <td class={renderColored('stock-table-row__relative')}>{stock.relative} EUR</td>
+                <td class={renderColored('stock-table-row__absolute', stock.absolute)}>{stock.absolute} EUR</td>
+                <td class={renderColored('stock-table-row__relative', stock.relative)}>{stock.relative} EUR</td>
                 <td class='stock-table-row__timestamp'>{new Date(stock.updated_at)}</td>
                 <td class='stock-table-row__exchange'>{stock.exchange}</td>
                 <td class='stock-table-row__revenue'>{stock.revenue}</td>
