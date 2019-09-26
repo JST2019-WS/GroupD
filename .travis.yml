@@ -1,6 +1,10 @@
 language: node_js
 node_js:
   - "stable"
+branches:
+  only:
+    - develop
+    - master
 install: npm install
 cache:
   directories:
@@ -8,3 +12,22 @@ cache:
 script:
   - npm test
   - npm run build
+deploy:
+  - provider: pages
+    repo: JST2019-WS/wso-plugin
+    target_branch: develop
+    skip_cleanup: true
+    github_token: $GH_DEP_TOKEN
+    keep_history: true
+    local_dir: build
+    on:
+      branch: develop
+  - provider: pages
+    repo: JST2019-WS/wso-plugin
+    target_branch: master
+    skip_cleanup: true
+    github_token: $GH_DEP_TOKEN
+    keep_history: true
+    local_dir: build
+    on:
+      branch: master
