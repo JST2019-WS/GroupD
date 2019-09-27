@@ -9,8 +9,9 @@
   "value": 5.37,
   "absolute": 0.139,
   "relative": 2.67,
-  "upopened_atd_at": 1569426396,
+  "updated_at": 1569426396,
   "exchange": "LAS",
+  "currency": "EUR",
   "volume": 549032.512,
   "history": [
     {

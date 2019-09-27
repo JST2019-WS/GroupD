@@ -12,6 +12,7 @@
         "relative": -2.37,
         "updated_at": 1569426392,
         "exchange": "LAS",
+        "currency": "EUR",
         "volume": 35729.21
     },
     {
@@ -27,6 +28,7 @@
         "relative": 2.67,
         "updated_at": 1569426396,
         "exchange": "LAS",
+        "currency": "EUR",
         "volume": 549032.512
     },
     {
@@ -42,6 +44,7 @@
         "relative": -2.94,
         "updated_at": 1569426512,
         "exchange": "ETR",
+        "currency": "EUR",
         "volume": 527432
     },
     {
@@ -57,6 +60,7 @@
         "relative": -0.20,
         "updated_at": 1569426741,
         "exchange": "ETR",
+        "currency": "EUR",
         "volume": 9917847.5
     }
 ]
