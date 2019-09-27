@@ -38,7 +38,7 @@ paths:
     post:
       summary: 'Notify server of stock selection'
       description: 'Notifies the server that the user has signified interest in a recommended stock'
-      parameters: 
+      parameters:
         - $ref: '#/components/parameters/user'
       requestBody:
         content:
@@ -46,9 +46,9 @@ paths:
             schema:
               type: object
               properties:
-                choice: 
+                choice:
                   $ref: '#/components/schemas/stock'
-                offered: 
+                offered:
                   type: array
                   items:
                     type: number
@@ -73,15 +73,20 @@ paths:
   /stock/{isin}:
     get:
       summary: 'Get stock details'
-      description: 'Returns detailed information on the stock along with historical data'
+      description: 'Returns detailed information on the stock along with historical data, ordered by date (newest first)'
       parameters:
         - name: "isin"
-          description: "The stock's isin"
+          description: "The stock's ISIN"
           in: path
           required: true
-          schema:
-            type: string
-            pattern: '(\d|\w)+' # TODO
+          $ref: '#/components/schemas/isin'
+        - name: "exchange"
+          in: query
+          required: true
+          $ref: '#/components/schemas/exchange'
+        - name: "currency"
+          in: query
+          $ref: '#/components/schemas/exchange'
         - name: "from"
           description: "ISO 8601 UTC-Timestamp of first price to include"
           in: query
@@ -96,6 +101,13 @@ paths:
           schema:
             type: string
             format: date-time
+        - name: "limit"
+          description: "Limits the number of entries returned. As results are ordered by date, a limit of 100 would return
+          only the 100 newest prices"
+          in: query
+          schema:
+            type: integer
+            minimum: 0
       responses:
         200:
           description: 'Successful response'
@@ -114,7 +126,7 @@ paths:
                 title: 'Stock not found'
                 type: string
                 example: '{isin} not found'
-  
+
 components:
   parameters:
     user:
@@ -125,7 +137,7 @@ components:
       required: true
       schema:
         type: string
-    portfolio: 
+    portfolio:
       in: query
       name: portfolio
       description: "**Portfolio**: The id's of stocks contained in the user's portfolio"
@@ -134,14 +146,14 @@ components:
           schema:
             type: array
             items:
-              type: 
+              type:
                 object
             default: []
   schemas:
     stock:
         type: object
         properties:
-          name: 
+          name:
             type: string
             description: "The stock's displayed name (i.e. label)"
             example: "Commerzbank"
@@ -153,7 +165,7 @@ components:
           isin:
             type: string
             description: "The stock's ISIN"
-            example: "DE000CBK1001"
+            $ref: '#/components/schemas/isin'
           category:
             $ref: '#/components/schemas/stockCategory'
           value:
@@ -175,11 +187,10 @@ components:
             format: date-time
             description: "ISO-8601 UTC-Timestamp of when the stock's value was last updated"
             example: "2019-09-27T08:00:00Z"
+          currency:
+            $ref: '#/components/schemas/currency'
           exchange:
-            type: string
-            description: "The exchange the stock is sold at"
-            example: "ETR"
-            # enum
+            $ref: '#/components/schemas/exchange'
           volume:
             type: number
             description: "The security's total revenue"
@@ -246,3 +257,20 @@ components:
           description: "The stock's volume"
           example: 3594472
           minimum: 0
+    currency:
+      type: string
+      description: "Currency the stock is traded in"
+      example: "EUR"
+      enum:
+        - "EUR"
+        - "USD"
+    exchange:
+      type: string
+      description: "Acronym of the exchange the stock is sold at"
+      example: "ETR"
+      pattern: "[A-Z]{3,4}"
+    isin:
+      type: string
+      description: "The stock's ISIN"
+      example: "US0378331005"
+      pattern: '[a-z]{2}[0-9]{10}'
