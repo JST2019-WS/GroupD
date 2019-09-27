@@ -7,7 +7,7 @@
     <title>Widget Template</title>
 
     <style>
-        .preview {
+        .recommendation-container {
             width: 100%;
             max-width: 1100px;
             margin: 80px auto;
@@ -15,7 +15,7 @@
             position: relative;
         }
 
-        .preview::before {
+        .recommendation-container::before {
             content: 'WIDGET PREVIEW';
             position: absolute;
             display: block;
@@ -28,25 +28,6 @@
 </head>
 
 <body>
-<div data-widget-host="habitat" class="preview">
-    <script type="text/props">
-      { "user": "test-user", "portfolio": [
-        {
-          "id": 1,
-          "since": "2019-01-01"
-        },
-        {
-          "id": 2,
-          "since": "2019-03-01"
-        },
-        {
-          "id": 3,
-          "since": "2019-02-01"
-        }
-      ]
-      }
-    </script>
-</div>
 <script async src="/bundle.js"></script>
 </body>
 
