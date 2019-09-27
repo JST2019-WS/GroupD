@@ -1,0 +1,159 @@
+openapi: '3.0.2'
+info:
+  title: 'Wallstreet Online Stock Recommendation API'
+  description: 'Get stock recommendations for users of WSO (Wallstreet Online).'
+  version: '0.1'
+  contact:
+    name: 'Wallstreet Online API'
+    url: 'https://rostlab.org'
+servers:
+  - url: 'http://127.0.0.1:8080/api/'
+    description: 'Local Dev Server'
+paths:
+  /recommend/{user}:
+    get:
+      summary: 'Get recommended stocks for a user'
+      description: 'Returns a list of recommended stocks for a user and his current portfolio'
+      parameters:
+        - $ref: '#/components/parameters/user'
+        - $ref: '#/components/parameters/portfolio'
+      responses:
+        200:
+          description: 'Successful response'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/stock'
+                default: []
+        404:
+          description: 'Non existing user'
+          content:
+            text/plain:
+              schema:
+                title: 'User not found'
+                type: string
+                example: '{user} not found'
+    post:
+      summary: 'Notify server of stock selection'
+      description: 'Notifies the server that the user has signified interest in a recommended stock'
+      parameters: 
+        - $ref: '#/components/parameters/user'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                choice: 
+                  $ref: '#/components/schemas/stock'
+                offered: 
+                  type: array
+                  items:
+                    type: number
+        required: true
+      responses:
+        200:
+          description: 'Selection acknowledged'
+          content:
+            text/plain:
+              schema:
+                title: 'User selection acknowledged'
+                type: string
+                example: '{user} selection ({stock.name}: {stock.id}) acknowledged'
+        404:
+          description: 'Non existing user'
+          content:
+            text/plain:
+              schema:
+                title: 'User not found'
+                type: string
+                example: '{user} not found'
+components:
+  parameters:
+    user:
+      name: user
+      in: path
+      description: '**User**: Identification of the user, either an ID or a name - depends on WSO'
+      example: 'test-user'
+      required: true
+      schema:
+        type: string
+    portfolio: 
+      in: query
+      name: portfolio
+      description: "**Portfolio**: The id's of stocks contained in the user's portfolio"
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: 
+                object
+            default: []
+  schemas:
+    stock:
+        type: object
+        properties:
+          name: 
+            type: string
+            description: "The stock's displayed name (i.e. label)"
+            example: "Commerzbank"
+          url:
+            type: string
+            format: url
+            description: "URL to WSO's details page for the respective stock"
+            example: "https://www.wallstreet-online.de/aktien/commerzbank-aktie"
+          isin:
+            type: string
+            description: "The stock's ISIN"
+            example: "DE000CBK1001"
+          category:
+            $ref: '#/components/schemas/stockCategory'
+          value:
+            type: number
+            description: "The stock's last known value"
+            minimum: 0
+            example: 5.249
+          absolute:
+            type: number
+            description: "Absolute change in value compared to the last known value"
+            example: -0.066
+          relative:
+            type: number
+            description: "Relative change in value compared to the last known value"
+            minimum: -1.0
+            example: -1.24
+          updated_at:
+            type: string
+            format: date-time
+            description: "ISO-8601 UTC-Timestamp of when the stock's value was last updated"
+            example: "2019-09-27T08:00:00Z"
+          exchange:
+            type: string
+            description: "The exchange the stock is sold at"
+            example: "ETR"
+            # enum
+          volume:
+            type: number
+            description: "The security's total revenue"
+            minimum: 0
+            example: 16182197
+        required: ['stock', 'category', 'value', 'absolute', 'relative'
+                  , 'updated_at', 'exchange', 'revenue', 'name', 'url', 'isin', 'id']
+    stockCategory:
+      type: object
+      description: "Describes a stock's category, i.e. it's name and url"
+      properties:
+        name:
+          type: string
+          example: "Banken"
+          description: "Displayed name of the category (i.e. label)"
+        url:
+          type: string
+          example: "https://www.wallstreet-online.de/aktien/branche/banken-aktien"
+          description: "URL to WSO page with details/further stocks on/belonging to the category"
+          format: url
+      required: ['name', 'url']
+      
