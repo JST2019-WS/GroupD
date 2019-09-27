@@ -70,6 +70,51 @@ paths:
                 title: 'User not found'
                 type: string
                 example: '{user} not found'
+  /stock/{isin}:
+    get:
+      summary: 'Get stock details'
+      description: 'Returns detailed information on the stock along with historical data'
+      parameters:
+        - name: "isin"
+          description: "The stock's isin"
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: '(\d|\w)+' # TODO
+        - name: "from"
+          description: "ISO 8601 UTC-Timestamp of first price to include"
+          in: query
+          example: '2019-05-05T08:00:00Z'
+          schema:
+            type: string
+            format: date-time
+        - name: "to"
+          description: "ISO 8601 UTC-Timestamp of last price to include"
+          in: query
+          example: '2019-05-30T08:00:00Z'
+          schema:
+            type: string
+            format: date-time
+      responses:
+        200:
+          description: 'Successful response'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/stock'
+                default: []
+        404:
+          description: 'Non existing stock'
+          content:
+            text/plain:
+              schema:
+                title: 'Stock not found'
+                type: string
+                example: '{isin} not found'
+  
 components:
   parameters:
     user:
@@ -140,8 +185,14 @@ components:
             description: "The security's total revenue"
             minimum: 0
             example: 16182197
+          history:
+            type: array
+            default: null
+            description: "*Optional*: The stock's past prices"
+            items:
+              $ref: '#/components/schemas/stockPrice'
         required: ['stock', 'category', 'value', 'absolute', 'relative'
-                  , 'updated_at', 'exchange', 'revenue', 'name', 'url', 'isin', 'id']
+                  , 'updated_at', 'exchange', 'revenue', 'name', 'url', 'isin', 'volume']
     stockCategory:
       type: object
       description: "Describes a stock's category, i.e. it's name and url"
@@ -156,4 +207,42 @@ components:
           description: "URL to WSO page with details/further stocks on/belonging to the category"
           format: url
       required: ['name', 'url']
-      
+    stockPrice:
+      type: object
+      description: "Prices of a stock"
+      properties:
+        opened_at:
+          type: string
+          format: date-time
+          description: "ISO-8601 UTC-Timestamp of when the aggregation period begins"
+          example: "2019-09-27T08:00:00Z"
+        closed_at:
+          type: string
+          format: date-time
+          description: "ISO-8601 UTC-Timestamp of when the aggregation period ends"
+          example: "2019-09-27T18:00:00Z"
+        open:
+          type: number
+          description: "The stock's opening value"
+          example: 387.1
+          minimum: 0
+        high:
+          type: number
+          description: "The highest value observed over the aggregation period"
+          example: 388.23
+          minimum: 0
+        low:
+          type: number
+          description: "The lowest value observed over the aggregation period"
+          example: 380.3
+          minimum: 0
+        close:
+          type: number
+          description: "The stock's closing value"
+          example: 381.53
+          minimum: 0
+        volume:
+          type: number
+          description: "The stock's volume"
+          example: 3594472
+          minimum: 0
