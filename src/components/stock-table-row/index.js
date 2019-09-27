@@ -26,8 +26,8 @@ export default class StockTableRow extends Component {
         return (
             <tr onClick={onClick} onMouseOver={onHover} class={{[style['stock-table-row']]: true, [style['stock-table-row--highlighted']]: stock.highlight}}>
                 <td class={style['stock-table-row__name']}>
-                    <a onClick={(evt) => { evt.preventDefault(); onClick(evt); }} href={stock.stock.url}>
-                        {stock.stock.name}
+                    <a onClick={(evt) => { evt.preventDefault(); onClick(evt); }} href={stock.url}>
+                        {stock.name}
                     </a>
                 </td>
                 <td class={style['stock-table-row__category']}><a href={stock.category.url}>{stock.category.name}</a></td>
@@ -36,7 +36,7 @@ export default class StockTableRow extends Component {
                 <td class={style[renderColored('stock-table-row__relative', stock.relative)]}>{formatNumber(stock.relative, {includeSign: true})}</td>
                 <td class={style['stock-table-row__timestamp']}>{formatTime(new Date(stock.updated_at))}</td>
                 <td class={style['stock-table-row__exchange']}>{stock.exchange}</td>
-                <td class={style['stock-table-row__revenue']}>{formatNumber(stock.revenue, { precision: 0 })}</td>
+                <td class={style['stock-table-row__revenue']}>{formatNumber(stock.volume, { precision: 0 })}</td>
             </tr>
         );
     }
