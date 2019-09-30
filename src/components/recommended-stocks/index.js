@@ -1,7 +1,6 @@
 import { h, Component } from "preact";
 import "./style.scss";
 import StockTable from "../stock-table";
-import StockDetail from "../stock-detail";
 
 /**
  * Fetches recommended stocks for the passed user.
@@ -69,7 +68,6 @@ export default class RecommendedRecommendedStocks extends Component {
         return (
             <div class="recommendation-container">
                 <StockTable stocks={recommendation} onStockClicked={this.stockClicked.bind(this)} onStockHovered={this.stockHovered.bind(this)} />
-                <StockDetail stock={selected || hovered} />
             </div>
         );
     }
