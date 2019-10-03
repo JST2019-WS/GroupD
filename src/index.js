@@ -3,7 +3,6 @@ let poly = require("preact-cli/lib/lib/webpack/polyfills");
 import { h, render } from "preact";
 import Router from 'preact-router';
 import RecommendedStocksWidget from "./components/recommended-stocks";
-import SwaggerUIComponent from "./components/swagger-ui";
 
 const props = { 
   "user": "test-user",
@@ -26,7 +25,6 @@ const props = {
 const Main = () => (
 	<Router>
 		<RecommendedStocksWidget user={props.user} portfolio={props.portfolio} path="/"/>
-		<SwaggerUIComponent path="/swaggerui"/>
 	</Router>
 );
 

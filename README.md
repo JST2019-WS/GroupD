@@ -29,7 +29,3 @@ To test the application run
 ```
 npm run test
 ```
-
-## API Documentation
-
-API Documentation can be accessed with Swagger UI at URL ``` /swaggerui ```
