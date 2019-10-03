@@ -24,6 +24,4 @@ export default (config, env, helpers) => {
             app.use(apiMocker('/api', 'api-mocks/'))
         }
     }
-    config.node.process = true;
-    config.node.Buffer = true;
 };
