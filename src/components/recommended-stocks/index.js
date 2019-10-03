@@ -1,5 +1,5 @@
 import { h, Component } from "preact";
-import "./style.scss";
+import style from "./style.scss";
 import StockTable from "../stock-table";
 
 /**
@@ -66,7 +66,7 @@ export default class RecommendedRecommendedStocks extends Component {
 
     render({user, portfolio}, { recommendation, selected, hovered }) {
         return (
-            <div class="recommendation-container">
+            <div class={style.recommendationContainer}>
                 <StockTable stocks={recommendation} onStockClicked={this.stockClicked.bind(this)} onStockHovered={this.stockHovered.bind(this)} />
             </div>
         );

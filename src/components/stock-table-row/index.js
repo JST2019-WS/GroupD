@@ -1,8 +1,8 @@
 import { h, Component } from "preact";
 import style from "./style.module.scss";
 
-function renderColored(classname, value) {
-    return `${classname} ${classname}--${value >= 0.0 ? 'positive' : 'negative'}`;
+function renderColored(value) {
+    return value >= 0.0 ? style.positiveNumber : style.negativeNumber;
 }
 
 function formatTime(date) {
@@ -24,19 +24,19 @@ function formatNumber(value, options = {}) {
 export default class StockTableRow extends Component {
     render({stock, onClick, onHover}, {}) {
         return (
-            <tr onClick={onClick} onMouseOver={onHover} class={{[style['stock-table-row']]: true, [style['stock-table-row--highlighted']]: stock.highlight}}>
-                <td class={style['stock-table-row__name']}>
+            <tr onClick={onClick} onMouseOver={onHover} class={`${style['stock-table-row']} ${ stock.highlight ? style['stock-table-row--highlighted'] : ''}`}>
+                <td class={style.name}>
                     <a onClick={(evt) => { evt.preventDefault(); onClick(evt); }} href={stock.url}>
                         {stock.name}
                     </a>
                 </td>
-                <td class={style['stock-table-row__category']}><a href={stock.category.url}>{stock.category.name}</a></td>
-                <td class={style['stock-table-row__value']}>{formatNumber(stock.value)}</td>
-                <td class={style[renderColored('stock-table-row__absolute', stock.absolute)]}>{formatNumber(stock.absolute, {includeSign: true})}</td>
-                <td class={style[renderColored('stock-table-row__relative', stock.relative)]}>{formatNumber(stock.relative, {includeSign: true})}</td>
-                <td class={style['stock-table-row__timestamp']}>{formatTime(new Date(stock.updated_at))}</td>
-                <td class={style['stock-table-row__exchange']}>{stock.exchange}</td>
-                <td class={style['stock-table-row__revenue']}>{formatNumber(stock.volume, { precision: 0 })}</td>
+                <td class={style.category}><a href={stock.category.url}>{stock.category.name}</a></td>
+                <td class={style.value}>{formatNumber(stock.value)} {stock.currency}</td>
+                <td class={`${style.absolute} ${renderColored(stock.absolute)}`}>{formatNumber(stock.absolute, {includeSign: true})} {stock.currency}</td>
+                <td class={`${style.relative} ${renderColored(stock.relative)}`}>{formatNumber(stock.relative, {includeSign: true})} %</td>
+                <td class={[style.timestamp, style.small].join(' ')}>{formatTime(new Date(stock.updated_at))}</td>
+                <td class={[style.exchange, style.small].join(' ')}>{stock.exchange}</td>
+                <td class={[style.revenue, style.small].join(' ')}>{formatNumber(stock.volume, { precision: 0 })} {stock.currency}</td>
             </tr>
         );
     }

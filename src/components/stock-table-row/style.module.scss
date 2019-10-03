@@ -1,15 +1,33 @@
-td {
-    &[class *= '--positive'] {
-        color: darkgreen;
-    }
-
-    &[class *= '--negative'] {
-        color: darkred;
-    }
+.positiveNumber {
+    color: darkgreen;
 }
 
-tr {
-    &[class *= '--highlight'] {
-        color: lightgreen;
-    }
+.negativeNumber {
+    color: darkred;
+}
+
+.stock-table-row {
+}
+
+.highlighted {
+    color: lightgreen;
+}
+
+.small {
+    font-weight: 100;
+}
+
+a {
+    text-decoration: none;
+    color: #004080;
+}
+
+.category,
+.name,
+.value,
+.timestamp,
+.exchange,
+.absolute,
+.relative,
+.revenue {
 }
