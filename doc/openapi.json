@@ -122,29 +122,21 @@
       "user": {
         "name": "user",
         "in": "path",
-        "description": "**User**: Identification of the user, either an ID or a name - depends on WSO",
-        "example": "test-user",
+        "description": "**User**: ID of the user recommendations are requested for",
+        "example": 12345678,
         "required": true,
         "schema": {
-          "type": "string"
+          "type": "number"
         }
       },
       "portfolio": {
         "in": "query",
         "name": "portfolio",
-        "description": "**Portfolio**: The id's of stocks contained in the user's portfolio",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "object"
-              },
-              "default": [
-
-              ]
-            }
-          }
+        "description": "**Portfolio**: The id of the user's portfolio",
+        "example": 87654321,
+        "required": true,
+        "schema": {
+          "type": "number"
         }
       }
     },

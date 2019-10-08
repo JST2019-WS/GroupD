@@ -4,23 +4,10 @@ import { h, render } from "preact";
 import Router from 'preact-router';
 import RecommendedStocksWidget from "./components/recommended-stocks";
 
-const props = { 
-  "user": "test-user",
-  "portfolio": [
-  {
-    "id": 1,
-    "since": "2019-01-01"
-  },
-  {
-    "id": 2,
-    "since": "2019-03-01"
-  },
-  {
-    "id": 3,
-    "since": "2019-02-01"
-  }
-]
-}
+const props = {
+  "user": 12345678,
+  "portfolio": 87654321
+};
 
 const Main = () => (
 	<Router>
