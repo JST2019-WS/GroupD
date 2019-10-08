@@ -25,10 +25,36 @@
         }
     </style>
 
+    <script type="text/javascript">
+        let registeredWOPlugins = [];
+
+        function registerWOPlugin(name, onload) {
+            let plugin = { name, onload };
+            switch(name) {
+                case "SecuritiesRecommendationEngine": plugin.containerId = "rengine-plugin-container"; break;
+                default: return;
+            }
+            registeredWOPlugins.push(plugin);
+        }
+
+        const WOPluginInfoProvider = {
+            currentUserId() {
+                return "12345678";
+            },
+            currentPortfolioId() {
+                return "87654321";
+            },
+        };
+
+        window.onload = function() {
+            registeredWOPlugins.forEach(p => p.onload(p.containerId));
+        };
+    </script>
 </head>
 
 <body>
-<script async src="/bundle.js"></script>
+<script async src="/index.js"></script>
+    <div id="rengine-plugin-container" />
 </body>
 
 </html>
