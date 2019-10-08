@@ -11,7 +11,7 @@ export default class RecommendedRecommendedStocks extends Component {
     constructor(props) {
         super(props);
         // Fetch recommendation
-        fetch(`${process.env.RECOMMENDATION_ENDPOINT}${encodeURIComponent(props.user)}?portfolio=${encodeURIComponent(JSON.stringify(props.portfolio))}`)
+        fetch(`${process.env.RECOMMENDATION_ENDPOINT}${props.user}?portfolio=${props.portfolio}`)
             .then((response) => {
                 if(response.status !== 200) {
                     return Promise.reject(response.text())
@@ -37,7 +37,7 @@ export default class RecommendedRecommendedStocks extends Component {
         });
         const navigate = evt.target.tagName.toLowerCase() === 'a';
         // Send post
-        fetch(`${process.env.FEEDBACK_ENDPOINT}${encodeURIComponent(this.props.user)}`, {
+        fetch(`${process.env.FEEDBACK_ENDPOINT}${this.props.user}`, {
             method: 'POST',
             cache: 'no-cache',
             headers: {
@@ -48,9 +48,6 @@ export default class RecommendedRecommendedStocks extends Component {
                 offered: this.state.recommendation.map((stock) => ( stock.id )),
                 switchedPage: navigate
             }
-        }).then((resp) => {
-            console.log(`Pushed choice to server!`);
-            console.log(resp);
         }).finally(() => {
             if(navigate) {
                 window.location = stock.stock.url;
