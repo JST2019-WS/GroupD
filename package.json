@@ -5,17 +5,16 @@
   "main": "dist/index.js",
   "umd:main": "dist/index.umd.js",
   "module": "dist/index.m.js",
-  "source": "components/hello-world/index.js",
+  "source": "index.js",
   "scripts": {
     "test": "jest",
     "start": "if-env NODE_ENV=production && npm run -s serve || npm run -s dev",
     "build": "preact build --no-prerender --clean --template src/index.ejs --service-worker false",
     "serve": "npm run build && preact serve",
-    "dev": "preact watch --template src/index.ejs",
-    "dist": "microbundle --entry src/components/hello-world/index.js"
+    "dev": "preact watch --template src/index.ejs"
   },
   "keywords": [],
-  "author": "Zouhir <zouhir@zouhir.org>",
+  "author": "Karthik Narumanchi <karthiknr@gmail.com>, Patrick Klein <patrick.sean.klein@tum.de>, Patrick Kufner <patrick.kufner@tum.de>",
   "license": "MIT",
   "devDependencies": {
     "connect-api-mocker": "^1.6.0",
@@ -26,7 +25,6 @@
     "microbundle": "^0.6.0",
     "node-sass": "^4.5.3",
     "preact-cli": "^2.0.2",
-    "preact-render-to-string": "^3.7.0",
     "preact-widget-scripts": "^0.6.0",
     "sass-loader": "^6.0.6"
   },
@@ -35,8 +33,7 @@
     "preact": "^8.5.2",
     "preact-compat": "^3.17.0",
     "preact-habitat": "^3.1.0",
-    "preact-render-to-string": "^4.1.0",
-    "preact-router": "^2.6.1"
+    "preact-render-to-string": "^4.1.0"
   },
   "jest": {
     "verbose": true,
