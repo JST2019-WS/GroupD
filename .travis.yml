@@ -12,6 +12,11 @@ cache:
 script:
   - npm test
   - npm run build
+  - echo "Running pre-deploy steps for prod env"
+  - mkdir deploymaster
+  - cp build/index.js deploymaster/
+  - echo "" >> deploymaster/index.css
+  - echo "Pre-deploy steps complete"
 deploy:
   - provider: pages
     repo: JST2019-WS/wso-plugin
@@ -27,7 +32,7 @@ deploy:
     target_branch: master
     skip_cleanup: true
     github_token: $GH_DEP_TOKEN
-    keep_history: true
-    local_dir: build
+    keep_history: false
+    local_dir: deploymaster
     on:
       branch: master
