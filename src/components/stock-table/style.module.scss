@@ -1,0 +1,31 @@
+.stock-table {
+    font-family: 'roboto', sans-serif;
+
+    th, td {
+        text-align: left;
+    }
+
+    .stock-table-head {
+        tr {
+            color: #eaeaea;
+            font-family: sans-serif;
+            font-weight: 100;
+        }
+    }
+
+    .stock-table-body {
+            tr {
+                .selected, &:hover {
+                    background-color: darken(#eaeaea, 20);
+                }
+
+                td {
+                    font-weight: bold;
+                    font-family: sans-serif;
+                    padding: 10px 5px;
+                }
+
+                background-color: #eaeaea;
+            }
+    }
+}

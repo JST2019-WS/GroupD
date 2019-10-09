@@ -1,0 +1,38 @@
+language: node_js
+node_js:
+  - "stable"
+branches:
+  only:
+    - develop
+    - master
+install: npm install
+cache:
+  directories:
+    - node_modules
+script:
+  - npm test
+  - npm run build
+  - echo "Running pre-deploy steps for prod env"
+  - mkdir deploymaster
+  - cp build/index.js deploymaster/
+  - echo "" >> deploymaster/index.css
+  - echo "Pre-deploy steps complete"
+deploy:
+  - provider: pages
+    repo: JST2019-WS/wso-plugin
+    target_branch: develop
+    skip_cleanup: true
+    github_token: $GH_DEP_TOKEN
+    keep_history: true
+    local_dir: build
+    on:
+      branch: develop
+  - provider: pages
+    repo: JST2019-WS/wso-plugin
+    target_branch: master
+    skip_cleanup: true
+    github_token: $GH_DEP_TOKEN
+    keep_history: false
+    local_dir: deploymaster
+    on:
+      branch: master
