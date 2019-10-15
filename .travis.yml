@@ -32,7 +32,7 @@ deploy:
     target_branch: master
     skip_cleanup: true
     github_token: $GH_DEP_TOKEN
-    keep_history: false
+    keep_history: true
     local_dir: deploymaster
     on:
       branch: master
