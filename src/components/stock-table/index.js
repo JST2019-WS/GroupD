@@ -17,7 +17,7 @@ export default class StockTable extends Component {
                         <th>(Letzter) Kurs</th>
                         <th>Absolut</th>
                         <th>Perf. %</th>
-                        <th>Zeit</th>
+                        <th>Letztes Update</th>
                         <th>Börse</th>
                         <th>Umsatz</th>
                     </tr>
