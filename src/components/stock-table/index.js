@@ -15,7 +15,7 @@ export default class StockTable extends Component {
                         <th>Wertpapier</th>
                         <th>Branche</th>
                         <th>(Letzter) Kurs</th>
-                        <th>Absolut</th>
+                        <th>Abs.</th>
                         <th>Perf. %</th>
                         <th>Letztes Update</th>
                         <th>Börse</th>
