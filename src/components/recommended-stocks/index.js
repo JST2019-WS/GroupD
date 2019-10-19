@@ -23,7 +23,7 @@ export default class RecommendedRecommendedStocks extends Component {
         // Fetch recommendation
         fetch(`${process.env.RECOMMENDATION_ENDPOINT}${user}?portfolio=${portfolio}`)
             .then((response) => {
-                if(response.status !== 200 || fail) {
+                if(response.status !== 200) {
                     return Promise.reject(`Error: ${response.status}`)
                 }
                 return response.json()
