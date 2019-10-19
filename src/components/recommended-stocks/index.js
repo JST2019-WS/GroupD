@@ -1,31 +1,45 @@
 import { h, Component } from "preact";
 import style from "./style.module.scss";
 import StockTable from "../stock-table";
+import ErrorPane from "../error-pane";
 
 /**
  * Fetches recommended stocks for the passed user.
  */
 export default class RecommendedRecommendedStocks extends Component {
-    state = { recommendation: null, error: null, selected: null, hovered: null };
+    state = { recommendation: null, error: null, selected: null, hovered: null, loading: null };
 
     constructor(props) {
         super(props);
+
+        this.updateRecommendation(props.user, props.portfolio)
+    }
+
+    updateRecommendation(user, portfolio) {
+        this.setState((state, props) => ({
+            error: null,
+            loading: true
+        }));
         // Fetch recommendation
-        fetch(`${process.env.RECOMMENDATION_ENDPOINT}${props.user}?portfolio=${props.portfolio}`)
+        fetch(`${process.env.RECOMMENDATION_ENDPOINT}${user}?portfolio=${portfolio}`)
             .then((response) => {
-                if(response.status !== 200) {
-                    return Promise.reject(response.text())
+                if(response.status !== 200 || fail) {
+                    return Promise.reject(`Error: ${response.status}`)
                 }
                 return response.json()
             }).then((recommendation) => {
-                // Further process response
-                this.setState((state, props) => {
-                    return { recommendation: recommendation }
-                });
-            }).catch((err) => {
-                this.setState((state, props) => {
-                    state.error = err
-                });
+            // Further process response
+            this.setState((state, props) => {
+                return { recommendation: recommendation }
+            })
+        }).catch((err) => {
+            this.setState((state, props) => ({
+                error: err
+            }))
+        }).finally(() => {
+            this.setState(() => ({
+                loading: false
+            }))
         })
     }
 
@@ -61,11 +75,18 @@ export default class RecommendedRecommendedStocks extends Component {
         }))
     }
 
-    render({user, portfolio}, { recommendation, selected, hovered }) {
-        return (
-            <div class={style['recommendation-container']}>
-                <StockTable stocks={recommendation} onStockClicked={this.stockClicked.bind(this)} onStockHovered={this.stockHovered.bind(this)}/>
-            </div>
-        );
+    render({user, portfolio}, { recommendation, selected, hovered, error, loading }) {
+        if (error && !loading) {
+            return (
+                <ErrorPane error={error} refreshCallback={() => this.updateRecommendation(user, portfolio)} />
+            );
+        } else {
+            return (
+                <div class={style['recommendation-container']}>
+                    <StockTable stocks={recommendation} onStockClicked={this.stockClicked.bind(this)}
+                                onStockHovered={this.stockHovered.bind(this)}/>
+                </div>
+            );
+        }
     }
 }
