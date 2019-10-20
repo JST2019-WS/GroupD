@@ -2,6 +2,8 @@ import { h, Component } from "preact";
 import style from "./style.module.scss";
 import StockTable from "../stock-table";
 import ErrorPane from "../error-pane";
+import { Bar } from 'styled-loaders';
+import DialogPane from "../dialog-pane";
 
 /**
  * Fetches recommended stocks for the passed user.
@@ -80,6 +82,12 @@ export default class RecommendedRecommendedStocks extends Component {
             return (
                 <ErrorPane error={error} refreshCallback={() => this.updateRecommendation(user, portfolio)} />
             );
+        } else if (loading) {
+            return (
+                <DialogPane dialogStyle={'background-color: transparent;'}>
+                    <Bar bgBar={'#507B62'} color={'#ffffff'} />
+                </DialogPane>
+            )
         } else {
             return (
                 <div class={style['recommendation-container']}>
