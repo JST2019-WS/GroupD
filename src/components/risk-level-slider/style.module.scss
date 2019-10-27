@@ -1,0 +1,11 @@
+.risk-level-slider__container {
+    width: 100%;
+    display: flex;
+
+    .risk-level-slider__label {
+    }
+
+    .risk-level-slider__slider {
+        flex-grow: 1;
+    }
+}
