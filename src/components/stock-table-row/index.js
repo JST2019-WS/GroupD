@@ -24,7 +24,7 @@ function formatNumber(value, options = {}) {
 export default class StockTableRow extends Component {
     render({stock, onClick, onHover}, {}) {
         return (
-            <tr onClick={onClick} onMouseOver={onHover} class={`${style['stock-table-row']} ${ stock.highlight ? style['stock-table-row--highlighted'] : ''}`}>
+            <tr onClick={onClick} onMouseOver={onHover} class={style['stock-table-row']}>
                 <td class={style.name}>
                     <a onClick={(evt) => { evt.preventDefault(); onClick(evt); }} href={stock.url}>
                         {stock.name}
@@ -32,8 +32,8 @@ export default class StockTableRow extends Component {
                 </td>
                 <td class={style.category}><a href={stock.category.url}>{stock.category.name}</a></td>
                 <td class={style.value}>{formatNumber(stock.value)} {stock.currency}</td>
-                <td class={`${style.absolute} ${renderColored(stock.absolute)}`}>{formatNumber(stock.absolute, {includeSign: true})} {stock.currency}</td>
-                <td class={`${style.relative} ${renderColored(stock.relative)}`}>{formatNumber(stock.relative, {includeSign: true})} %</td>
+                <td class={[style.absolute, renderColored(stock.absolute)].join(' ')}>{formatNumber(stock.absolute, {includeSign: true})} {stock.currency}</td>
+                <td class={[style.relative, renderColored(stock.relative)].join(' ')}>{formatNumber(stock.relative, {includeSign: true})} %</td>
                 <td class={[style.timestamp, style.small].join(' ')}>{formatTime(new Date(stock.updated_at))}</td>
                 <td class={[style.exchange, style.small].join(' ')}>{stock.exchange}</td>
                 <td class={[style.revenue, style.small].join(' ')}>{formatNumber(stock.volume, { precision: 0 })} {stock.currency}</td>
