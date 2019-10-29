@@ -87,7 +87,7 @@ export default class RecommendedRecommendedStocks extends Component {
         });
         const navigate = evt.target.tagName.toLowerCase() === 'a';
         // Send post
-        fetch(`${process.env.FEEDBACK_ENDPOINT}${this.props.user}`, {
+        fetch(`${process.env.FEEDBACK_ENDPOINT}${this.props.user}?portfolio=${this.props.portfolio}`, {
             method: 'POST',
             cache: 'no-cache',
             headers: {
@@ -113,7 +113,7 @@ export default class RecommendedRecommendedStocks extends Component {
 
     riskLevelUpdated(riskLevel) {
         // Notify backend
-        fetch(`${process.env.USER_INFO_ENDPOINT}${this.props.user}`, {
+        fetch(`${process.env.USER_INFO_ENDPOINT}${this.props.user}?portfolio=${this.props.portfolio}`, {
             method: 'POST',
             cache: 'no-cache',
             headers: {
