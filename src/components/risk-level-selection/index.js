@@ -10,10 +10,6 @@ export default class RiskLevelSelection extends Component {
 
     constructor({riskLevel}) {
         super(riskLevel);
-
-        this.setState(() => ({
-            selectedValue: riskLevel
-        }))
     }
 
     updateSelection(riskLevel) {
@@ -26,7 +22,8 @@ export default class RiskLevelSelection extends Component {
         }
     }
 
-    render({onUpdate}, {selectedValue}) {
+    render({onUpdate, riskLevel}) {
+        const _selectedLevel = (riskLevel === null || riskLevel === undefined) ? riskLevels[0].value : riskLevel;
         return (
             <form className={style['risk-level-selection__container']}>
                 {
@@ -36,14 +33,17 @@ export default class RiskLevelSelection extends Component {
                         if(style[`${classPrefix}--${riskLevel.value}`]) {
                             classes.push(style[`${classPrefix}--${riskLevel.value}`])
                         }
-                        if(selectedValue === riskLevel.value) {
+                        if(_selectedLevel === riskLevel.value) {
                             classes.push(style[`${classPrefix}--selected`])
                         }
                         return (
-                            <label class={classes.join(' ')} key={riskLevel.value}>
-                                <input type="radio" value={riskLevel} name="risk-level-selection" checked={selectedValue === riskLevel.value} onChange={() => { this.updateSelection(riskLevel) } }/>
+                            <span class={classes.join(' ')} key={riskLevel.value} onClick={() => {
+                                if(_selectedLevel !== riskLevel.value) {
+                                    this.updateSelection(riskLevel)
+                                }
+                            } }>
                                 {riskLevel.label}
-                            </label>
+                            </span>
                         )
                     })
                 }
