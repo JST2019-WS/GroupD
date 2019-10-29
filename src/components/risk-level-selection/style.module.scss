@@ -1,0 +1,37 @@
+.risk-level-selection__container {
+    width: 100%;
+    user-select: none;
+    display: flex;
+
+    border: #507B62 2px solid;
+    border-width: 2px 1px;
+
+    .risk-level-selection__option {
+        display: inline-block;
+        padding: 5px 10px;
+        text-align: center;
+        vertical-align: middle;
+        flex-grow: 1;
+        border: #507B62 2px solid;
+        border-width: 0px 1px;
+
+        &:hover {
+            cursor: pointer;
+            background-color: #507B62;
+            color: white;
+        }
+
+        > input {
+            position: absolute;
+            left: -999999em;
+            top: -999999em;
+            opacity: 1;
+            z-index: 1;
+        }
+
+        &--selected {
+            background-color: #507B62;
+            color: white;
+        }
+    }
+}

@@ -4,7 +4,7 @@ import StockTable from "../stock-table";
 import ErrorPane from "../error-pane";
 import { Bar } from 'styled-loaders';
 import DialogPane from "../dialog-pane";
-import RiskLevelSlider from "../risk-level-slider";
+import RiskLevelSelection from "../risk-level-selection";
 
 /**
  * Fetches recommended stocks for the passed user.
@@ -143,7 +143,7 @@ export default class RecommendedRecommendedStocks extends Component {
                         <StockTable stocks={recommendation} onStockClicked={this.stockClicked.bind(this)}
                                     onStockHovered={this.stockHovered.bind(this)}/>
                     </div>
-                    <RiskLevelSlider riskLevel={7} onUpdate={(level) => this.riskLevelUpdated(level)} class={style['recommendation-container']} />
+                    <RiskLevelSelection riskLevel={0.03} onUpdate={(level) => this.riskLevelUpdated(level)} class={style['recommendation-container']} />
                 </div>
             );
         }
