@@ -12,6 +12,7 @@ import RiskLevelSelection from "../risk-level-selection";
 export default class RecommendedRecommendedStocks extends Component {
     state = { recommendation: null, error: null, selected: null, hovered: null
         , loading: false, user: null, showSettings: false };
+    pending = false; // setState() is async, hence we need pending to prevent race conditions
 
     constructor(props) {
         super(props);
@@ -20,15 +21,15 @@ export default class RecommendedRecommendedStocks extends Component {
     }
 
     refreshCachedData(user_id, portfolio_id, clearCache=false) {
-        if(this.state.loading) { // There may be a request pending
+        if(this.state.loading || this.pending) { // There may be a request pending
             return;
         }
+        this.pending = true;
         // Clear any errors and set loading
         this.setState(() => ({
             loading: true,
             error: null
         }));
-        // TODO Possible race condition as setState is async!
 
         const request = (!this.state.user || clearCache)
             ? this.requestUserData(user_id)
@@ -38,12 +39,13 @@ export default class RecommendedRecommendedStocks extends Component {
             return this.requestRecommendation(user_id, portfolio_id)
         }).catch((err) => {
             this.setState(() => ({
-                error: err
+                error: {error: err, callback: () => { this.refreshCachedData(user_id, portfolio_id, clearCache); }}
             }))
         }).finally(() => {
             this.setState(() => ({
                 loading: false
-            }))
+            }));
+            this.pending = false;
         })
     }
 
@@ -80,6 +82,11 @@ export default class RecommendedRecommendedStocks extends Component {
     }
 
     stockClicked(stock, evt) {
+        if(this.state.loading || this.pending) {
+            return
+        }
+        this.pending = true;
+
         this.setState((state, props) => {
             return {
                 selected: (state.selected && stock.id === state.selected.id) ? null : stock,
@@ -99,8 +106,9 @@ export default class RecommendedRecommendedStocks extends Component {
                 switchedPage: navigate
             })
         }).finally(() => {
+            this.pending = false;
             if(navigate) {
-                window.location = stock.stock.url;
+                window.location = stock.url;
             }
         })
     }
@@ -112,6 +120,10 @@ export default class RecommendedRecommendedStocks extends Component {
     }
 
     riskLevelUpdated(riskLevel) {
+        if(this.state.loading || this.pending) {
+            return
+        }
+        this.pending = true; // Prevent potential race conditions
         // Notify backend
         fetch(`${process.env.USER_INFO_ENDPOINT}${this.props.user}?portfolio=${this.props.portfolio}`, {
             method: 'POST',
@@ -122,13 +134,30 @@ export default class RecommendedRecommendedStocks extends Component {
             body: JSON.stringify({
                 'risk-level': riskLevel
             })
-        })
+        }).then((resp) => {
+            if(resp.status === 404) {
+                return Promise.reject('Could not update risk level!')
+            }
+        }).then(() => {
+            // Only update when the request was successfull
+            this.setState(() => ({
+                user: {...this.state.user, riskLevel: riskLevel}
+            }));
+
+            this.pending = false;
+            this.refreshCachedData(this.props.user, this.props.portfolio);
+        }).catch((err) => {
+            this.pending = false;
+            this.setState(() => ({
+                error: {error: err, callback: () => { this.riskLevelUpdated(riskLevel) } }
+            }));
+        });
     }
 
     render({user, portfolio}, { recommendation, selected, hovered, error, loading, showSettings}) {
         if (error && !loading) {
             return (
-                <ErrorPane error={error} refreshCallback={() => this.refreshCachedData(user, portfolio)} />
+                <ErrorPane error={error.error} refreshCallback={error.callback} />
             );
         } else if (loading) {
             return (
@@ -143,7 +172,7 @@ export default class RecommendedRecommendedStocks extends Component {
                         <StockTable stocks={recommendation} onStockClicked={this.stockClicked.bind(this)}
                                     onStockHovered={this.stockHovered.bind(this)}/>
                     </div>
-                    <RiskLevelSelection riskLevel={0.03} onUpdate={(level) => this.riskLevelUpdated(level)} class={style['recommendation-container']} />
+                    <RiskLevelSelection riskLevel={this.state.user ? this.state.user.riskLevel : 0.03} onUpdate={(level) => this.riskLevelUpdated(level)} class={style['recommendation-container']} />
                 </div>
             );
         }

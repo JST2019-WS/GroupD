@@ -1,7 +1,8 @@
 .risk-level-selection__container {
     width: 100%;
+    display: inline-flex;
     user-select: none;
-    display: flex;
+    box-sizing: border-box;
 
     border: #507B62 2px solid;
     border-width: 2px 1px;

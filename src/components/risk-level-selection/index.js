@@ -13,10 +13,6 @@ export default class RiskLevelSelection extends Component {
     }
 
     updateSelection(riskLevel) {
-        this.setState(() => ({
-            selectedValue: riskLevel.value
-        }));
-
         if(this.props.onUpdate) {
             this.props.onUpdate(riskLevel.value);
         }
