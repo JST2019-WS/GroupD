@@ -30,3 +30,7 @@ Object.defineProperties(global, {
 global.fetch = fetch;
 
 configure({adapter: new Adapter});
+
+require('dotenv').config({
+    path: require('find-config')('.testing.env')
+});

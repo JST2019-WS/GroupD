@@ -13,6 +13,6 @@ describe('Dialog Pane', () => {
 
     it('should work for null children', () => {
         const component = shallow(<DialogPane/>);
-        expect(component.children()).toHaveLength(0);
+        expect(component.childAt(0).children()).toHaveLength(0);
     });
 });
