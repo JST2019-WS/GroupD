@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`null-error-with-callback 1`] = `"<div class=\\"dialog-pane-background\\"><div class=\\"dialog-pane-dialog\\" style=\\"background-color: darkred;\\">Unknown error<br /></div></div>"`;
+
+exports[`null-error-without-callback 1`] = `"<div class=\\"dialog-pane-background\\"><div class=\\"dialog-pane-dialog\\" style=\\"background-color: darkred;\\">Unknown error<br /><div class=\\"error-pane-dialog__button\\">Retry</div></div></div>"`;
+
+exports[`orindary-error 1`] = `"<div class=\\"dialog-pane-background\\"><div class=\\"dialog-pane-dialog\\" style=\\"background-color: darkred;\\"><undefined></undefined><br /></div></div>"`;

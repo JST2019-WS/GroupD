@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Stock Table should render as many stocks as passed 1`] = `
+"<table className=\\"stock-table\\">
+  <thead className=\\"stock-table-head\\">
+    <tr>
+      <th>
+        Wertpapier
+      </th>
+      <th>
+        Branche
+      </th>
+      <th>
+        (Letzter) Kurs
+      </th>
+      <th>
+        Abs.
+      </th>
+      <th>
+        Perf. %
+      </th>
+      <th>
+        Letztes Update
+      </th>
+      <th>
+        Börse
+      </th>
+      <th>
+        Umsatz
+      </th>
+    </tr>
+  </thead>
+  <tbody className=\\"stock-table-body\\">
+    <StockTableRow stock=\\"a\\" onClick={[Function: bound ]} onHover={[Function]} />
+    <StockTableRow stock=\\"b\\" onClick={[Function: bound ]} onHover={[Function]} />
+    <StockTableRow stock=\\"c\\" onClick={[Function: bound ]} onHover={[Function]} />
+  </tbody>
+</table>"
+`;
+
+exports[`null-stocks 1`] = `"<table class=\\"stock-table\\"><thead class=\\"stock-table-head\\"><tr><th>Wertpapier</th><th>Branche</th><th>(Letzter) Kurs</th><th>Abs.</th><th>Perf. %</th><th>Letztes Update</th><th>Börse</th><th>Umsatz</th></tr></thead><tbody class=\\"stock-table-body\\"><tr>No stocks found.</tr></tbody></table>"`;
+
+exports[`null-stocks 2`] = `"<table class=\\"stock-table\\"><thead class=\\"stock-table-head\\"><tr><th>Wertpapier</th><th>Branche</th><th>(Letzter) Kurs</th><th>Abs.</th><th>Perf. %</th><th>Letztes Update</th><th>Börse</th><th>Umsatz</th></tr></thead><tbody class=\\"stock-table-body\\"><tr>No stocks found.</tr></tbody></table>"`;
+
+exports[`valid-stocks 1`] = `"<table class=\\"stock-table\\"><thead class=\\"stock-table-head\\"><tr><th>Wertpapier</th><th>Branche</th><th>(Letzter) Kurs</th><th>Abs.</th><th>Perf. %</th><th>Letztes Update</th><th>Börse</th><th>Umsatz</th></tr></thead><tbody class=\\"stock-table-body\\"><tr class=\\"stock-table-row\\"><td class=\\"name\\"><a href=\\"https://www.wallstreet-online.de/aktien/deutsche-pfandbriefbank-aktie\\">Deutsche Pfandbriefbank</a></td><td class=\\"category\\"><a href=\\"https://www.wallstreet-online.de/aktien/branche/banken-aktien\\">Banken</a></td><td class=\\"value\\">10,71 EUR</td><td class=\\"absolute negativeNumber\\">-0,26 EUR</td><td class=\\"relative negativeNumber\\">-2,37 %</td><td class=\\"timestamp small\\">04:57:06</td><td class=\\"exchange small\\">LAS</td><td class=\\"revenue small\\">35.729 EUR</td></tr><tr class=\\"stock-table-row\\"><td class=\\"name\\"><a href=\\"https://www.wallstreet-online.de/aktien/commerzbank-aktie\\">Commerzbank</a></td><td class=\\"category\\"><a href=\\"https://www.wallstreet-online.de/aktien/branche/banken-aktien\\">Banken</a></td><td class=\\"value\\">5,37 EUR</td><td class=\\"absolute positiveNumber\\">+0,14 EUR</td><td class=\\"relative positiveNumber\\">+2,67 %</td><td class=\\"timestamp small\\">04:57:06</td><td class=\\"exchange small\\">LAS</td><td class=\\"revenue small\\">549.033 EUR</td></tr><tr class=\\"stock-table-row\\"><td class=\\"name\\"><a href=\\"https://www.wallstreet-online.de/aktien/new-work-aktie\\">New Work</a></td><td class=\\"category\\"><a href=\\"https://www.wallstreet-online.de/aktien/branche/software-internet-aktien\\">Software und Internet</a></td><td class=\\"value\\">263,00 EUR</td><td class=\\"absolute negativeNumber\\">-9,00 EUR</td><td class=\\"relative negativeNumber\\">-2,94 %</td><td class=\\"timestamp small\\">04:57:06</td><td class=\\"exchange small\\">ETR</td><td class=\\"revenue small\\">527.432 EUR</td></tr><tr class=\\"stock-table-row\\"><td class=\\"name\\"><a href=\\"https://www.wallstreet-online.de/aktien/telefonica-deutschland-holding-aktie\\">Telefonica Deutschland Holding</a></td><td class=\\"category\\"><a href=\\"https://www.wallstreet-online.de/aktien/branche/telekommunikation-aktien\\">Telekommunikation</a></td><td class=\\"value\\">2.501,63 EUR</td><td class=\\"absolute negativeNumber\\">-0,33 EUR</td><td class=\\"relative negativeNumber\\">-0,20 %</td><td class=\\"timestamp small\\">04:57:06</td><td class=\\"exchange small\\">ETR</td><td class=\\"revenue small\\">9.917.848 EUR</td></tr></tbody></table>"`;

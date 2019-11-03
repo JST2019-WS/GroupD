@@ -81,7 +81,7 @@ export default class RecommendedRecommendedStocks extends Component {
         })
     }
 
-    stockClicked(stock, evt) {
+    stockClicked(stock, evt, mode) {
         if(this.state.loading || this.pending) {
             return
         }
