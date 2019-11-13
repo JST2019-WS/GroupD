@@ -1,0 +1,5 @@
+{
+  "name": "test-user",
+  "riskLevel": 0.3,
+  "portfolios": ["test-portfolio-a", "test-portfolio-b", "test-portfolio-c"]
+}

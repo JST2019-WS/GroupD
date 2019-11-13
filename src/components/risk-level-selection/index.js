@@ -19,7 +19,7 @@ export default class RiskLevelSelection extends Component {
     }
 
     render({onUpdate, riskLevel}) {
-        const _selectedLevel = (riskLevel === null || riskLevel === undefined) ? riskLevels[0].value : riskLevel;
+        const _selectedLevel = (riskLevel === null || riskLevel === undefined || !riskLevels.map((elem) => elem.value).includes(riskLevel)) ? riskLevels[0].value : riskLevel;
         return (
             <form className={style['risk-level-selection__container']}>
                 {

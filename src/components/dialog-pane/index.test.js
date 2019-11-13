@@ -1,10 +1,18 @@
 /* eslint-env node, jest */
 
-import render from "preact-render-to-string";
 import DialogPane from "./index";
+import {shallow} from 'enzyme';
 
-describe("Placeholder Test", () => {
-    it("Test", () => {
-      expect(1 + 2).toEqual(3);
+describe('Dialog Pane', () => {
+    it('should render all children', () => {
+        const children = (<div><span>Test</span></div>);
+        const component = shallow(<DialogPane>{children}</DialogPane>);
+
+        expect(component.children().html()).toMatch(shallow(children).html());
     });
-  });
+
+    it('should work for null children', () => {
+        const component = shallow(<DialogPane/>);
+        expect(component.childAt(0).children()).toHaveLength(0);
+    });
+});

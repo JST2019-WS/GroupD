@@ -10,11 +10,20 @@ export default class ErrorPane extends Component {
     render({error, refreshCallback}) {
         return (
             <DialogPane dialogStyle={'background-color: darkred;'}>
-                {error}
+                {error || 'Unknown error'}
                 <br/>
-                <div className={style['error-pane-dialog__button']} onClick={refreshCallback}>
-                    Retry
-                </div>
+                {(() => {
+                    if(refreshCallback) {
+                        return (
+                            <div className={style['error-pane-dialog__button']} onClick={refreshCallback}>
+                                Retry
+                            </div>
+                        )
+                    } else {
+                        return null
+                    }
+                })()
+                }
             </DialogPane>
         );
     }

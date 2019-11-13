@@ -9,7 +9,7 @@ import RiskLevelSelection from "../risk-level-selection";
 /**
  * Fetches recommended stocks for the passed user.
  */
-export default class RecommendedRecommendedStocks extends Component {
+export default class RecommendedStocks extends Component {
     state = { recommendation: null, error: null, selected: null, hovered: null
         , loading: false, user: null, showSettings: false };
     pending = false; // setState() is async, hence we need pending to prevent race conditions
@@ -81,7 +81,7 @@ export default class RecommendedRecommendedStocks extends Component {
         })
     }
 
-    stockClicked(stock, evt) {
+    stockClicked(stock, _evt, mode) {
         if(this.state.loading || this.pending) {
             return
         }
@@ -92,7 +92,7 @@ export default class RecommendedRecommendedStocks extends Component {
                 selected: (state.selected && stock.id === state.selected.id) ? null : stock,
             }
         });
-        const navigate = evt.target.tagName.toLowerCase() === 'a';
+        const navigate = mode === 'link';
         // Send post
         fetch(`${process.env.FEEDBACK_ENDPOINT}${this.props.user}?portfolio=${this.props.portfolio}`, {
             method: 'POST',
@@ -102,7 +102,7 @@ export default class RecommendedRecommendedStocks extends Component {
             },
             body: JSON.stringify({
                 choice: stock,
-                offered: this.state.recommendation.map((stock) => ( stock.id )),
+                offered: this.state.recommendation.map((stock) => stock.isin),
                 switchedPage: navigate
             })
         }).finally(() => {
