@@ -27,7 +27,11 @@ Object.defineProperties(global, {
 });
 
 // Mock fetch
+global.window.fetch = fetch;
 global.fetch = fetch;
+
+delete global.window.location;
+global.window = {};
 
 configure({adapter: new Adapter});
 
