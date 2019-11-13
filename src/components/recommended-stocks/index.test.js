@@ -105,6 +105,7 @@ describe('Recommended Stocks', () => {
         component.update();
 
         const checkResponse = (call, stock) => {
+            expect(call[0]).toEqual(`${process.env.FEEDBACK_ENDPOINT}${config.userID}?portfolio=${config.portfolioID}`);
             const params = call[1];
             const body = JSON.parse(params.body);
 
