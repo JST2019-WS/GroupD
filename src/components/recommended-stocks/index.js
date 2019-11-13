@@ -81,7 +81,7 @@ export default class RecommendedStocks extends Component {
         })
     }
 
-    stockClicked(stock, evt, mode) {
+    stockClicked(stock, _evt, mode) {
         if(this.state.loading || this.pending) {
             return
         }
@@ -92,7 +92,7 @@ export default class RecommendedStocks extends Component {
                 selected: (state.selected && stock.id === state.selected.id) ? null : stock,
             }
         });
-        const navigate = evt.target.tagName.toLowerCase() === 'a';
+        const navigate = mode === 'link';
         // Send post
         fetch(`${process.env.FEEDBACK_ENDPOINT}${this.props.user}?portfolio=${this.props.portfolio}`, {
             method: 'POST',
@@ -102,7 +102,7 @@ export default class RecommendedStocks extends Component {
             },
             body: JSON.stringify({
                 choice: stock,
-                offered: this.state.recommendation.map((stock) => ( stock.id )),
+                offered: this.state.recommendation.map((stock) => stock.isin),
                 switchedPage: navigate
             })
         }).finally(() => {

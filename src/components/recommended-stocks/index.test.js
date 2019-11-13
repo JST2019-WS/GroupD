@@ -9,6 +9,8 @@ import mockStocks from '../../../test/stocks.json'
 import mockUser from '../../../test/user.json'
 import delay from 'delay'
 import { Bar } from 'styled-loaders';
+import StockTable from "../stock-table";
+import StockTableRow from "../stock-table-row";
 
 function didRequestUser(call, user) {
     expect(url(call[0]).pathname.split('/').pop()).toEqual(user);
@@ -34,9 +36,9 @@ describe('Recommended Stocks', () => {
     beforeEach(() => { fetch.resetMocks() });
 
     it('should display error pane only on error', async () => {
-        fetch.mockResponses(JSON.stringify(mockUser), JSON.stringify(mockStocks));
+        fetch.once(JSON.stringify(mockUser)).once(JSON.stringify(mockStocks));
         const component = shallow(<RecommendedStocks user={config.userID} portfolio={config.portfolioID}/>);
-        await delay(100);
+        await delay(500);
         await setStateAsync(component, {
                 error: {
                     error: new Error('test'), callback: () => {
@@ -49,7 +51,7 @@ describe('Recommended Stocks', () => {
     });
 
     it('should display loading bar only when loading', async () => {
-        fetch.mockResponses(JSON.stringify(mockUser), JSON.stringify(mockStocks));
+        fetch.once(JSON.stringify(mockUser)).once(JSON.stringify(mockStocks));
         const component = shallow(<RecommendedStocks user={config.userID} portfolio={config.portfolioID}/>);
         await delay(100);
         await setStateAsync(component, {
@@ -81,8 +83,49 @@ describe('Recommended Stocks', () => {
         }, 1000);
     });
 
-    it('should correctly display errors', () => {
+    it('should correctly display errors', async () => {
+        fetch
+            .once(JSON.stringify(mockUser))
+            .once(JSON.stringify(mockStocks));
+        const component = shallow(<RecommendedStocks user={config.userID} portfolio={config.portfolioID}/>);
+        await delay(100);
+        await setStateAsync(component, {
+            error: {
+                error: new Error('test'), callback: () => {
+                }
+            }
+        });
+        expect(component.html()).toMatchSnapshot();
+    });
 
+    it('should post updates to the server', async () => {
+        fetch.once(JSON.stringify(mockUser)).once(JSON.stringify(mockStocks));
+        const component = mount(<RecommendedStocks user={config.userID} portfolio={config.portfolioID}/>);
+        await delay(1000);
+        component.update();
+
+        const checkResponse = (call, stock) => {
+            const params = call[1];
+            const body = JSON.parse(params.body);
+
+            expect(params.method).toEqual('POST');
+            expect(body['choice']).toEqual(stock);
+            return true
+        };
+
+        fetch.resetMocks();
+        fetch.mockResponse('200 OK');
+        for(let i = 0; i < mockStocks.length; i+=1) {
+            component.find(StockTable).prop('onStockClicked')(mockStocks[i], {}, 'row');
+            expect(checkResponse(fetch.mock.calls[2*i], mockStocks[i])).toBeTruthy();
+            expect(JSON.parse(fetch.mock.calls[2*i][1].body).switchedPage).toEqual(false);
+            await delay(100);
+
+            component.find(StockTable).prop('onStockClicked')(mockStocks[i], {}, 'link');
+            expect(checkResponse(fetch.mock.calls[2*i+1], mockStocks[i])).toBeTruthy();
+            expect(JSON.parse(fetch.mock.calls[2*i+1][1].body).switchedPage).toEqual(true);
+            await delay(100);
+        }
     });
 
     it('should handle failing requests', done => {
