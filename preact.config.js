@@ -44,11 +44,13 @@ export default (config, env, helpers) => {
         index: './index.js'
     };*/
 
-    config.plugins.push(new BundleAnalyzerPlugin({
-        excludeAssets: /^(?!index.js)/,
-        analyzerMode: 'static',
-        defaultSizes: 'gzip'
-    }));
+    if(env.production) {
+        config.plugins.push(new BundleAnalyzerPlugin({
+            excludeAssets: /^(?!index.js)/,
+            analyzerMode: 'static',
+            defaultSizes: 'gzip'
+        }));
+    }
 
     // Enable performance hints
     config.performance = {
