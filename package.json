@@ -11,12 +11,14 @@
     "start": "if-env NODE_ENV=production && npm run -s serve || npm run -s dev",
     "build": "preact build --no-prerender --clean --template src/index.ejs --service-worker false --json true",
     "serve": "npm run build && preact serve",
+    "check-size": "npm run build && size-limit",
     "dev": "preact watch --template src/index.ejs"
   },
   "keywords": [],
   "author": "Karthik Narumanchi <karthiknr@gmail.com>, Patrick Klein <patrick.sean.klein@tum.de>, Patrick Kufner <patrick.kufner@tum.de>",
   "license": "MIT",
   "devDependencies": {
+    "@size-limit/preset-app": "^2.2.1",
     "connect-api-mocker": "^1.6.0",
     "delay": "^4.3.0",
     "dotenv": "^8.2.0",
@@ -72,5 +74,11 @@
       "node_modules",
       "src"
     ]
-  }
+  },
+  "size-limit": [
+    {
+      "path": "build/index.js",
+      "limit": "10 KB"
+    }
+  ]
 }

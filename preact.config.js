@@ -48,11 +48,4 @@ export default (config, env, helpers) => {
             defaultSizes: 'gzip'
         }));
     }
-
-    // Enable performance hints
-    config.performance = {
-        hints: 'warning',
-        maxEntrypointSize: 10 * 1000,
-        maxAssetSize: 2 * 1000
-    };
 };
