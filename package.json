@@ -9,15 +9,16 @@
   "scripts": {
     "test": "jest",
     "start": "if-env NODE_ENV=production && npm run -s serve || npm run -s dev",
-    "build": "preact build --no-prerender --clean --template src/index.ejs --service-worker false",
-    "stats": "preact build --no-prerender --clean --template src/index.ejs --service-worker false --stats",
+    "build": "preact build --no-prerender --clean --template src/index.ejs --service-worker false --json true",
     "serve": "npm run build && preact serve",
+    "check-size": "npm run build && size-limit",
     "dev": "preact watch --template src/index.ejs"
   },
   "keywords": [],
   "author": "Karthik Narumanchi <karthiknr@gmail.com>, Patrick Klein <patrick.sean.klein@tum.de>, Patrick Kufner <patrick.kufner@tum.de>",
   "license": "MIT",
   "devDependencies": {
+    "@size-limit/preset-app": "^2.2.1",
     "connect-api-mocker": "^1.6.0",
     "delay": "^4.3.0",
     "dotenv": "^8.2.0",
@@ -33,7 +34,8 @@
     "preact-cli": "^2.0.2",
     "preact-widget-scripts": "^0.6.0",
     "sass-loader": "^6.0.6",
-    "url": "^0.11.0"
+    "url": "^0.11.0",
+    "webpack-bundle-analyzer": "^3.6.0"
   },
   "dependencies": {
     "dotenv-webpack": "^1.7.0",
@@ -41,8 +43,7 @@
     "enzyme-adapter-preact-pure": "^2.1.0",
     "preact": "^8.5.2",
     "preact-compat": "^3.17.0",
-    "preact-habitat": "^3.1.0",
-    "styled-loaders": "^0.3.0"
+    "preact-habitat": "^3.1.0"
   },
   "jest": {
     "verbose": true,
@@ -73,5 +74,11 @@
       "node_modules",
       "src"
     ]
-  }
+  },
+  "size-limit": [
+    {
+      "path": "build/index.js",
+      "limit": "10 KB"
+    }
+  ]
 }
