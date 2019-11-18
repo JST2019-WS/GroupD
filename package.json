@@ -9,8 +9,7 @@
   "scripts": {
     "test": "jest",
     "start": "if-env NODE_ENV=production && npm run -s serve || npm run -s dev",
-    "build": "preact build --no-prerender --clean --template src/index.ejs --service-worker false",
-    "stats": "preact build --no-prerender --clean --template src/index.ejs --service-worker false --stats",
+    "build": "preact build --no-prerender --clean --template src/index.ejs --service-worker false --json true",
     "serve": "npm run build && preact serve",
     "dev": "preact watch --template src/index.ejs"
   },
@@ -34,8 +33,7 @@
     "preact-widget-scripts": "^0.6.0",
     "sass-loader": "^6.0.6",
     "url": "^0.11.0",
-    "webpack-bundle-analyzer": "^3.6.0",
-    "webpack-monitor": "^1.0.14"
+    "webpack-bundle-analyzer": "^3.6.0"
   },
   "dependencies": {
     "dotenv-webpack": "^1.7.0",
