@@ -2,7 +2,6 @@ import { h, Component } from "preact";
 import style from "./style.module.scss";
 import StockTable from "../stock-table";
 import ErrorPane from "../error-pane";
-import { Bar } from 'styled-loaders';
 import DialogPane from "../dialog-pane";
 import RiskLevelSelection from "../risk-level-selection";
 
@@ -160,9 +159,10 @@ export default class RecommendedStocks extends Component {
                 <ErrorPane error={error.error} refreshCallback={error.callback} />
             );
         } else if (loading) {
+            //<Bar bgBar={'#507B62'} color={'#ffffff'}/>
             return (
                 <DialogPane dialogStyle={'background-color: transparent;'}>
-                    <Bar bgBar={'#507B62'} color={'#ffffff'}/>
+                    Loading...
                 </DialogPane>
             )
         } else {
