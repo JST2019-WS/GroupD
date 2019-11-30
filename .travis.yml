@@ -10,7 +10,6 @@ cache:
   directories:
     - node_modules
 script:
-  - npm test
   - npm run build
   - echo "Running pre-deploy steps for prod env"
   - mkdir deploymaster
