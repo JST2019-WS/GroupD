@@ -10,7 +10,11 @@ export default class LoadingPane extends Component {
     render({error, refreshCallback}) {
         return (
             <DialogPane dialogStyle={'background-color: transparent;'}>
-                Loading...
+                <div class={style['spinner-container']}>
+                    <div class={style['spinner']}>
+                        <div/><div/><div/>
+                    </div>
+                </div>
             </DialogPane>
         );
     }

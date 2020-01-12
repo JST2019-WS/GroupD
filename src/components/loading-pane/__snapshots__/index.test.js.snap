@@ -1,3 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`loading-pane should render as expected 1`] = `"<div class=\\"dialog-pane-background\\"><div class=\\"dialog-pane-dialog\\" style=\\"background-color: transparent;\\"><div class=\\"dialog-pane-background\\"><div class=\\"dialog-pane-dialog\\" style=\\"background-color: transparent;\\">Loading...</div></div></div></div>"`;
+exports[`loading-pane should render as expected 1`] = `"<div class=\\"dialog-pane-background\\"><div class=\\"dialog-pane-dialog\\" style=\\"background-color: transparent;\\"><div class=\\"spinner-container\\"><div class=\\"spinner\\"><div></div><div></div><div></div></div></div></div></div>"`;

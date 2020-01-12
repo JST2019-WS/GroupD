@@ -1,34 +1,49 @@
-.error-pane {
-  &-background {
-    background-color: gray;
-    opacity: 0.5;
-    width: 100%;
-    height: 100%;
-    position: relative;
-  }
-
-  &-dialog {
-    background-color: darkred;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 10px;
-    vertical-align: middle;
-    text-align: center;
-    color: white;
-
-    &__button {
-      margin: 10px 0 0 0;
-      background-color: #507B62;
-      padding: 5px;
-      color: white;
-      z-index: 1;
-
-      &:hover {
-        cursor: pointer;
-        text-decoration: underline;
-      }
-    }
-  }
+@keyframes spinner-1 {
+  0% { top: 48.239999999999995px; height: 47.519999999999996px }
+  50% { top: 56.16px; height: 31.68px }
+  100% { top: 56.16px; height: 31.68px }
 }
+@keyframes spinner-2 {
+  0% { top: 50.22px; height: 43.559999999999995px }
+  50% { top: 56.16px; height: 31.68px }
+  100% { top: 56.16px; height: 31.68px }
+}
+@keyframes spinner-3 {
+  0% { top: 52.199999999999996px; height: 39.6px }
+  50% { top: 56.16px; height: 31.68px }
+  100% { top: 56.16px; height: 31.68px }
+}
+.spinner div { position: absolute; width: 20.16px }.spinner div:nth-child(1) {
+  left: 25.919999999999998px;
+  background: #507b62;
+  animation: spinner-1 1s cubic-bezier(0,0.5,0.5,1) infinite;
+  animation-delay: -0.2s
+}
+.spinner div:nth-child(2) {
+  left: 61.919999999999995px;
+  background: #ffffff;
+  animation: spinner-2 1s cubic-bezier(0,0.5,0.5,1) infinite;
+  animation-delay: -0.1s
+}
+.spinner div:nth-child(3) {
+  left: 97.92px;
+  background: #507b62;
+  animation: spinner-3 1s cubic-bezier(0,0.5,0.5,1) infinite;
+}
+
+.spinner-container {
+  width: 144px;
+  height: 144px;
+  display: inline-block;
+  overflow: hidden;
+  background: none;
+}
+.spinner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform: translateZ(0) scale(1);
+  backface-visibility: hidden;
+  transform-origin: 0 0; /* see note above */
+}
+.spinner-container div { box-sizing: content-box; }
