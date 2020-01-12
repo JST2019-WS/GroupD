@@ -101,7 +101,7 @@ describe('Recommended Stocks', () => {
         expect(component.html()).toMatchSnapshot();
     });
 
-    it('should post updates to the server', async () => {
+    it('should post recommendation updates to the server', async () => {
         fetch.once(JSON.stringify(mockUser)).once(JSON.stringify(mockStocks));
         const component = mount(<RecommendedStocks user={config.userID} portfolio={config.portfolioID}/>);
         await delay(1000);
@@ -130,6 +130,28 @@ describe('Recommended Stocks', () => {
             expect(JSON.parse(fetch.mock.calls[2*i+1][1].body).switchedPage).toEqual(true);
             await delay(100);
         }
+    });
+
+    it('should post risk level updates to the server', async () => {
+        fetch.once(JSON.stringify(mockUser)).once(JSON.stringify(mockStocks));
+        const component = mount(<RecommendedStocks user={config.userID} portfolio={config.portfolioID}/>);
+        await delay(1000);
+        component.update();
+
+        fetch.resetMocks();
+        fetch.mockResponse('200 OK');
+        const risk = riskLevels[0].value;
+
+        component.find(RiskLevelSelection).prop('onUpdate')(risk);
+        expect(fetch.mock.calls.length).toBe(1); // API is queried
+        const [url, params] = fetch.mock.calls[0];
+        expect(url).toEqual(`${process.env.PORTFOLIO_ENDPOINT}`);
+        expect(params.method).toBe('POST');
+        const body = JSON.parse(params.body);
+        expect(body['risk']).toBe(risk);
+        expect(body['userId']).toBe(config.userID);
+        expect(body['portfolioId']).toBe(config.portfolioID);
+        expect(body['action']).toBe('setPortfolioRisk');
     });
 
     it('should handle failing requests', done => {

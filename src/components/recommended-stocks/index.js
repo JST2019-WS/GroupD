@@ -2,7 +2,6 @@ import { h, Component } from "preact";
 import style from "./style.module.scss";
 import StockTable from "../stock-table";
 import ErrorPane from "../error-pane";
-import DialogPane from "../dialog-pane";
 import RiskLevelSelection from "../risk-level-selection";
 import LoadingPane from "../loading-pane";
 
@@ -53,7 +52,7 @@ export default class RecommendedStocks extends Component {
         // Query backend for any additional user data
         return fetch(`${process.env.USER_INFO_ENDPOINT}${user_id}`)
             .then((response) => {
-                if(response.status !== 200) {
+                if(!response.ok) {
                     return Promise.reject(`Error: ${response.status}`)
                 }
                 return response.json()
@@ -69,7 +68,7 @@ export default class RecommendedStocks extends Component {
         // Fetch recommendation
         return fetch(`${process.env.RECOMMENDATION_ENDPOINT}${user}?portfolio=${portfolio}`)
             .then((response) => {
-                if(response.status !== 200) {
+                if(!response.ok) {
                     return Promise.reject(`Error: ${response.status}`)
                 }
                 return response.json()
@@ -105,7 +104,7 @@ export default class RecommendedStocks extends Component {
                 offered: this.state.recommendation.map((stock) => stock.isin),
                 switchedPage: navigate
             })
-        }).finally(() => {
+        }).finally(() => { // Ignore failed updates
             this.pending = false;
             if(navigate) {
                 window.location = stock.url;
@@ -125,17 +124,20 @@ export default class RecommendedStocks extends Component {
         }
         this.pending = true; // Prevent potential race conditions
         // Notify backend
-        fetch(`${process.env.USER_INFO_ENDPOINT}${this.props.user}?portfolio=${this.props.portfolio}`, {
+        fetch(`${process.env.PORTFOLIO_ENDPOINT}`, {
             method: 'POST',
             cache: 'no-cache',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                'risk-level': riskLevel
+                'risk': riskLevel,
+                'action': 'setPortfolioRisk',
+                'userId': this.props.user,
+                'portfolioId': this.props.portfolio
             })
         }).then((resp) => {
-            if(resp.status === 404) {
+            if(!resp.ok) {
                 return Promise.reject('Could not update risk level!')
             }
         }).then(() => {
