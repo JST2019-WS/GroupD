@@ -134,7 +134,8 @@ export default class RecommendedStocksContainer extends Component {
                 'risk': riskLevel,
                 'action': 'setPortfolioRisk',
                 'userId': this.props.user,
-                'portfolioId': this.props.portfolio
+                'portfolioId': this.props.portfolio,
+                'securityKey': SECURITY_KEY
             })
         }).then((resp) => {
             if(!resp.ok) {
