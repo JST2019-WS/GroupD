@@ -1,6 +1,5 @@
 /* eslint-env node, jest */
 
-import { h } from "preact";
 import { shallow, mount } from 'enzyme'
 import { parse as url } from 'url'
 import delay from 'delay'

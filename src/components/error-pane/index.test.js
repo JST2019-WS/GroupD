@@ -1,6 +1,5 @@
 /* eslint-env node, jest */
 
-import { h } from "preact";
 import ErrorPane from "./index";
 import { shallow } from 'enzyme'
 

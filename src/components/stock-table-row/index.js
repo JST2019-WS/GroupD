@@ -38,8 +38,8 @@ export default class StockTableRow extends Component {
             )
         }
         return (
-            <tr onClick={(evt) => {onClick(evt, 'row')}} onMouseOver={onHover} class={style['stock-table-row']}>
-                <td class={style.name}>
+            <tr onClick={(evt) => {onClick(evt, 'row')}} onMouseOver={onHover} className={style['stock-table-row']}>
+                <td className={style.name}>
                     <a onClick={(evt) => {
                         evt.preventDefault();
                         evt.stopPropagation();
@@ -48,13 +48,13 @@ export default class StockTableRow extends Component {
                         {stock.name}
                     </a>
                 </td>
-                <td class={style.category}><a href={stock.category.url}>{stock.category.name}</a></td>
-                <td class={style.value}>{formatNumber(stock.value)} {stock.currency}</td>
-                <td class={[style.absolute, renderColored(stock.absolute)].join(' ')}>{formatNumber(stock.absolute, {includeSign: true})} {stock.currency}</td>
-                <td class={[style.relative, renderColored(stock.relative)].join(' ')}>{formatNumber(stock.relative, {includeSign: true})} %</td>
-                <td class={[style.timestamp, style.small].join(' ')}>{formatTime(new Date(stock.updated_at))}</td>
-                <td class={[style.exchange, style.small].join(' ')}>{stock.exchange}</td>
-                <td class={[style.revenue, style.small].join(' ')}>{formatNumber(stock.volume, {precision: 0})} {stock.currency}</td>
+                <td className={style.category}><a href={stock.category.url}>{stock.category.name}</a></td>
+                <td className={style.value}>{formatNumber(stock.value)} {stock.currency}</td>
+                <td className={[style.absolute, renderColored(stock.absolute)].join(' ')}>{formatNumber(stock.absolute, {includeSign: true})} {stock.currency}</td>
+                <td className={[style.relative, renderColored(stock.relative)].join(' ')}>{formatNumber(stock.relative, {includeSign: true})} %</td>
+                <td className={[style.timestamp, style.small].join(' ')}>{formatTime(new Date(stock.updated_at))}</td>
+                <td className={[style.exchange, style.small].join(' ')}>{stock.exchange}</td>
+                <td className={[style.revenue, style.small].join(' ')}>{formatNumber(stock.volume, {precision: 0})} {stock.currency}</td>
             </tr>
         );
     }

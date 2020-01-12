@@ -1,6 +1,5 @@
 /* eslint-env node, jest */
 
-import { h } from "preact";
 import { shallow } from "enzyme"
 import {riskLevels} from "../../models/riskLevels";
 import RiskLevelSelection from "./index";

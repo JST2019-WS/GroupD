@@ -1,6 +1,5 @@
 /* eslint-env node, jest */
 
-import { h } from "preact";
 import StockTable from "./index";
 import {shallow, mount} from "enzyme";
 import stocks from '../../../test/stocks.json'
