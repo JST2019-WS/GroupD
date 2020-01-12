@@ -9,7 +9,7 @@ import mockStocks from '../../../test/stocks.json'
 import mockUser from '../../../test/user.json'
 import {riskLevels} from "../../models/riskLevels";
 
-import RecommendedStocks from "./index";
+import RecommendedStocksContainer from "./index";
 import ErrorPane from "../error-pane";
 import StockTable from "../stock-table";
 import RiskLevelSelection from "../risk-level-selection";
@@ -40,7 +40,7 @@ describe('Recommended Stocks', () => {
 
     it('should display error pane only on error', async () => {
         fetch.once(JSON.stringify(mockUser)).once(JSON.stringify(mockStocks));
-        const component = shallow(<RecommendedStocks user={config.userID} portfolio={config.portfolioID}/>);
+        const component = shallow(<RecommendedStocksContainer user={config.userID} portfolio={config.portfolioID}/>);
         await delay(500);
         await setStateAsync(component, {
                 error: {
@@ -55,7 +55,7 @@ describe('Recommended Stocks', () => {
 
     it('should display loading bar only when loading', async () => {
         fetch.once(JSON.stringify(mockUser)).once(JSON.stringify(mockStocks));
-        const component = shallow(<RecommendedStocks user={config.userID} portfolio={config.portfolioID}/>);
+        const component = shallow(<RecommendedStocksContainer user={config.userID} portfolio={config.portfolioID}/>);
         await delay(100);
         await setStateAsync(component, {
             loading: true
@@ -70,7 +70,7 @@ describe('Recommended Stocks', () => {
             .once(JSON.stringify(mockUser))
             .once(JSON.stringify(mockStocks));
 
-        const component = shallow(<RecommendedStocks user={config.userID} portfolio={config.portfolioID} />);
+        const component = shallow(<RecommendedStocksContainer user={config.userID} portfolio={config.portfolioID} />);
         setTimeout(() => {
             // user data should have been requested first
             didRequestUser(fetch.mock.calls[0], config.userID);
@@ -90,7 +90,7 @@ describe('Recommended Stocks', () => {
         fetch
             .once(JSON.stringify(mockUser))
             .once(JSON.stringify(mockStocks));
-        const component = shallow(<RecommendedStocks user={config.userID} portfolio={config.portfolioID}/>);
+        const component = shallow(<RecommendedStocksContainer user={config.userID} portfolio={config.portfolioID}/>);
         await delay(100);
         await setStateAsync(component, {
             error: {
@@ -103,7 +103,7 @@ describe('Recommended Stocks', () => {
 
     it('should post recommendation updates to the server', async () => {
         fetch.once(JSON.stringify(mockUser)).once(JSON.stringify(mockStocks));
-        const component = mount(<RecommendedStocks user={config.userID} portfolio={config.portfolioID}/>);
+        const component = mount(<RecommendedStocksContainer user={config.userID} portfolio={config.portfolioID}/>);
         await delay(1000);
         component.update();
 
@@ -134,7 +134,7 @@ describe('Recommended Stocks', () => {
 
     it('should post risk level updates to the server', async () => {
         fetch.once(JSON.stringify(mockUser)).once(JSON.stringify(mockStocks));
-        const component = mount(<RecommendedStocks user={config.userID} portfolio={config.portfolioID}/>);
+        const component = mount(<RecommendedStocksContainer user={config.userID} portfolio={config.portfolioID}/>);
         await delay(1000);
         component.update();
 
@@ -157,7 +157,7 @@ describe('Recommended Stocks', () => {
     it('should handle failing requests', done => {
         fetch.mockReject(new Error('Testing timeout'));
 
-        const component = mount(<RecommendedStocks user={config.userID} portfolio={config.portfolioID} />);
+        const component = mount(<RecommendedStocksContainer user={config.userID} portfolio={config.portfolioID} />);
         delay(500).then(() => {
             component.update();
             // user data should have been requested

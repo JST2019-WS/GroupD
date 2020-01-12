@@ -8,7 +8,7 @@ import LoadingPane from "../loading-pane";
 /**
  * Fetches recommended stocks for the passed user.
  */
-export default class RecommendedStocks extends Component {
+export default class RecommendedStocksContainer extends Component {
     state = { recommendation: null, error: null, selected: null, hovered: null
         , loading: false, user: null, showSettings: false };
     pending = false; // setState() is async, hence we need pending to prevent race conditions

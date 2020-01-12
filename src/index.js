@@ -1,7 +1,7 @@
 let poly = require("preact-cli/lib/lib/webpack/polyfills");
 
 import habitat from 'preact-habitat'
-import RecommendedStocksWidget from "./components/recommended-stocks";
+import RecommendedStocksWidget from "./components/recommended-stocks-container";
 const { render } = habitat(RecommendedStocksWidget);
 
 function renderStockRecommendation(root_elem, user_id, portfolio_id) {

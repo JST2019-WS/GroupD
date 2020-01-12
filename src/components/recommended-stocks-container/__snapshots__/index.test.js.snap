@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Recommended Stocks should correctly display errors 1`] = `"<div class=\\"dialog-pane-background\\"><div class=\\"dialog-pane-dialog\\" style=\\"background-color: darkred;\\"><undefined></undefined><br /><div class=\\"error-pane-dialog__button\\">Retry</div></div></div>"`;

@@ -41,10 +41,11 @@ describe('Stock Table Row', () => {
         const component = shallow(<StockTableRow stock={stock} onClick={onClick} onHover={onHover}/>);
 
         component.simulate('click');
-        expect(onClick.mock.calls.length).toBe(1);
+        expect(onClick.mock.calls.length).toBe(1); // Only one event should be raised
         expect(onClick.mock.calls[onClick.mock.calls.length-1][1]).toBe('row');
+
         component.find('a').first().simulate('click');
-        expect(onClick.mock.calls.length).toBe(2);
+        expect(onClick.mock.calls.length).toBe(2); // Clicking on a link does not raise a row event
         expect(onClick.mock.calls[onClick.mock.calls.length-1][1]).toBe('link');
 
         component.simulate('mouseover');

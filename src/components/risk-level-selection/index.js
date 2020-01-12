@@ -45,12 +45,5 @@ export default class RiskLevelSelection extends Component {
                 }
             </form>
         )
-        /*return (
-            <label className={style['risk-level-slider__container']}>
-                <input className={style['risk-level-slider__slider']}
-                       type="range" min="1" max="10" step={"1"} value={selectedValue} onChange={(evt) => { this.updateSelection(evt.target.value, onUpdate) }} onInput={(evt) => { this.updateSelection(evt.target.value) }}/>
-                <span className={style['risk-level-slider__label']}>Risk level: {selectedValue}</span>
-            </label>
-        )*/
     }
 }
