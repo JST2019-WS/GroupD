@@ -140,7 +140,7 @@ describe('Recommended Stocks', () => {
 
         fetch.resetMocks();
         fetch.mockResponse('200 OK');
-        const risk = riskLevels[0].value;
+        const risk = riskLevels[Math.floor(Math.random() * riskLevels.length)].value;
 
         component.find(RiskLevelSelection).prop('onUpdate')(risk);
         expect(fetch.mock.calls.length).toBe(1); // API is queried
