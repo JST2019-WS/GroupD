@@ -146,14 +146,14 @@ export default class RecommendedStocksContainer extends Component {
                 user: {...this.state.user, riskLevel: riskLevel}
             }));
 
-            this.pending = false;
             this.refreshCachedData(this.props.user, this.props.portfolio);
         }).catch((err) => {
-            this.pending = false;
             this.setState(() => ({
                 error: {error: err, callback: () => { this.riskLevelUpdated(riskLevel) } }
             }));
-        });
+        }).finally(() => {
+            this.pending = false;
+        })
     }
 
     render({user, portfolio}, { recommendation, selected, hovered, error, loading, showSettings}) {

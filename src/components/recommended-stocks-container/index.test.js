@@ -134,7 +134,7 @@ describe('Recommended Stocks', () => {
 
     it('should post risk level updates to the server', async () => {
         fetch.once(JSON.stringify(mockUser)).once(JSON.stringify(mockStocks));
-        const component = mount(<RecommendedStocksContainer user={config.userID} portfolio={config.portfolioID}/>);
+        const component = shallow(<RecommendedStocksContainer user={config.userID} portfolio={config.portfolioID}/>);
         await delay(1000);
         component.update();
 
@@ -152,6 +152,28 @@ describe('Recommended Stocks', () => {
         expect(body['userId']).toBe(config.userID);
         expect(body['portfolioId']).toBe(config.portfolioID);
         expect(body['action']).toBe('setPortfolioRisk');
+    });
+
+    it('should prevent race conditions for risk level update events', async () => {
+        fetch.once(JSON.stringify(mockUser)).once(JSON.stringify(mockStocks));
+        const component = shallow(<RecommendedStocksContainer user={config.userID} portfolio={config.portfolioID}/>);
+        await delay(1000);
+        component.update();
+
+        fetch.resetMocks();
+        fetch.mockResponse(() => delay(200, {value: {body: '200 OK'}}));
+        const risks = riskLevels.slice(0, 2).map(elem => elem.value);
+
+        const triggerRiskUpdate = component.find(RiskLevelSelection).prop('onUpdate');
+
+        triggerRiskUpdate(risks[0]);
+        await delay(Math.random() * 50);
+        triggerRiskUpdate(risks[1]);
+        await delay(500);
+
+        // Fetch should have only registered the first request
+        expect(fetch.mock.calls).toHaveLength(1);
+        expect(JSON.parse(fetch.mock.calls[0][1].body).risk).toBe(risks[0]);
     });
 
     it('should handle failing requests', done => {
