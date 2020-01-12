@@ -3,14 +3,17 @@
 import { h } from "preact";
 import { shallow, mount } from 'enzyme'
 import { parse as url } from 'url'
-import RecommendedStocks from "./index";
-import ErrorPane from "../error-pane";
+import delay from 'delay'
+
 import mockStocks from '../../../test/stocks.json'
 import mockUser from '../../../test/user.json'
-import delay from 'delay'
-import { Bar } from 'styled-loaders';
+import {riskLevels} from "../../models/riskLevels";
+
+import RecommendedStocks from "./index";
+import ErrorPane from "../error-pane";
 import StockTable from "../stock-table";
-import StockTableRow from "../stock-table-row";
+import RiskLevelSelection from "../risk-level-selection";
+import LoadingPane from "../loading-pane";
 
 function didRequestUser(call, user) {
     expect(url(call[0]).pathname.split('/').pop()).toEqual(user);
@@ -57,9 +60,9 @@ describe('Recommended Stocks', () => {
         await setStateAsync(component, {
             loading: true
         });
-        expect(component.find(Bar)).toHaveLength(1);
+        expect(component.find(LoadingPane)).toHaveLength(1);
         await setStateAsync(component, {loading: false});
-        expect(component.find(Bar)).toHaveLength(0);
+        expect(component.find(LoadingPane)).toHaveLength(0);
     });
 
     it('should request user data on load', done => {

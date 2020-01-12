@@ -4,6 +4,7 @@ import StockTable from "../stock-table";
 import ErrorPane from "../error-pane";
 import DialogPane from "../dialog-pane";
 import RiskLevelSelection from "../risk-level-selection";
+import LoadingPane from "../loading-pane";
 
 /**
  * Fetches recommended stocks for the passed user.
@@ -159,11 +160,8 @@ export default class RecommendedStocks extends Component {
                 <ErrorPane error={error.error} refreshCallback={error.callback} />
             );
         } else if (loading) {
-            //<Bar bgBar={'#507B62'} color={'#ffffff'}/>
             return (
-                <DialogPane dialogStyle={'background-color: transparent;'}>
-                    Loading...
-                </DialogPane>
+                <LoadingPane/>
             )
         } else {
             return (
