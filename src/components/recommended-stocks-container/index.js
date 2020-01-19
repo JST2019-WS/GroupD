@@ -50,32 +50,64 @@ export default class RecommendedStocksContainer extends Component {
 
     requestUserData(user_id) {
         // Query backend for any additional user data
-        return fetch(`${process.env.USER_INFO_ENDPOINT}${user_id}`)
-            .then((response) => {
+        return fetch(`${process.env.API_BASE_URL}${process.env.USER_INFO_ENDPOINT}`, {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                'userId': user_id,
+                'action': 'getUser',
+                'securityKey': SECURITY_KEY
+            })
+        }).then((response) => {
                 if(!response.ok) {
                     return Promise.reject(`Error: ${response.status}`)
                 }
                 return response.json()
             }).then((user_info) => {
+                const current_portfolio = user_info.portfolios.find((elem) => elem.id === this.props.portfolio);
+                if(!current_portfolio) {
+                    return Promise.reject(`Error: User ${user_info.user.id} does not have a portfolio with id ${this.props.portfolio}!`);
+                }
+
                 // Handle actual data
                 this.setState(() => {
-                    return {user: user_info}
+                    return {user: {portfolios: user_info.portfolios, ...user_info.user}, portfolio: current_portfolio}
                 })
             })
     }
 
     requestRecommendation(user, portfolio) {
         // Fetch recommendation
-        return fetch(`${process.env.RECOMMENDATION_ENDPOINT}${user}?portfolio=${portfolio}`)
-            .then((response) => {
+        return fetch(`${process.env.API_BASE_URL}${process.env.RECOMMENDATION_ENDPOINT}`, {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                'userId': user.id,
+                'portfolioId': portfolio.id,
+                'riskClass': portfolio.risk,
+                'action': 'fetch',
+                'securityKey': SECURITY_KEY
+            })
+        }).then((response) => {
                 if(!response.ok) {
                     return Promise.reject(`Error: ${response.status}`)
                 }
                 return response.json()
-            }).then((recommendation) => {
+            }).then((response) => {
                 // Further process response
+                const recommendations = response.map(stock => ({
+                    isin: stock.isin,
+                    name: stock.name,
+                    updated_at: stock.date
+                }));
                 this.setState((state, props) => {
-                    return { recommendation: recommendation }
+                    return { recommendation: recommendations }
                 })
         })
     }
@@ -93,16 +125,17 @@ export default class RecommendedStocksContainer extends Component {
         });
         const navigate = mode === 'link';
         // Send post
-        fetch(`${process.env.FEEDBACK_ENDPOINT}${this.props.user}?portfolio=${this.props.portfolio}`, {
+        fetch(`${process.env.API_BASE_URL}${process.env.FEEDBACK_ENDPOINT}`, {
             method: 'POST',
             cache: 'no-cache',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                choice: stock,
-                offered: this.state.recommendation.map((stock) => stock.isin),
-                switchedPage: navigate
+                action: 'notify',
+                userId: this.user.id,
+                isin: stock.isin,
+                clickType: navigate
             })
         }).finally(() => { // Ignore failed updates
             this.pending = false;
@@ -124,7 +157,7 @@ export default class RecommendedStocksContainer extends Component {
         }
         this.pending = true; // Prevent potential race conditions
         // Notify backend
-        fetch(`${process.env.PORTFOLIO_ENDPOINT}`, {
+        fetch(`${process.env.API_BASE_URL}${process.env.PORTFOLIO_ENDPOINT}`, {
             method: 'POST',
             cache: 'no-cache',
             headers: {
@@ -173,7 +206,7 @@ export default class RecommendedStocksContainer extends Component {
                         <StockTable stocks={recommendation} onStockClicked={this.stockClicked.bind(this)}
                                     onStockHovered={this.stockHovered.bind(this)}/>
                     </div>
-                    <RiskLevelSelection riskLevel={this.state.user ? this.state.user.riskLevel : 0.03} onUpdate={(level) => this.riskLevelUpdated(level)} class={style['recommendation-container']} />
+                    <RiskLevelSelection riskLevel={this.state.portfolio ? this.state.portfolio.risk : 0.03} onUpdate={(level) => this.riskLevelUpdated(level)} class={style['recommendation-container']} />
                 </div>
             );
         }

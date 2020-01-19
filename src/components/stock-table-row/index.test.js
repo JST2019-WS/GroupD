@@ -35,6 +35,16 @@ describe('Stock Table Row', () => {
         expect(component.html()).toMatchSnapshot('null-stock')
     });
 
+    it('should render an error on passing a empty stock', () => {
+        const component = shallow(<StockTableRow stock={{}}/>);
+        expect(component.html()).toMatchSnapshot('null-stock')
+    });
+
+    it('should render default values', () => {
+        const component = shallow(<StockTableRow stock={{name: 'Test'}}/>);
+        expect(component.html()).toMatchSnapshot('default-stock')
+    });
+
     it('should propagate click/hover events', () => {
         const onClick = jest.fn();
         const onHover = jest.fn();

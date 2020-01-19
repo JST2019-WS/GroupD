@@ -107,7 +107,7 @@ describe('Recommended Stocks', () => {
         component.update();
 
         const checkResponse = (call, stock) => {
-            expect(call[0]).toEqual(`${process.env.FEEDBACK_ENDPOINT}${config.userID}?portfolio=${config.portfolioID}`);
+            expect(call[0]).toEqual(`${process.env.API_BASE_URL}${process.env.FEEDBACK_ENDPOINT}${config.userID}?portfolio=${config.portfolioID}`);
             const params = call[1];
             const body = JSON.parse(params.body);
 
@@ -144,7 +144,7 @@ describe('Recommended Stocks', () => {
         component.find(RiskLevelSelection).prop('onUpdate')(risk);
         expect(fetch.mock.calls.length).toBe(1); // API is queried
         const [url, params] = fetch.mock.calls[0];
-        expect(url).toEqual(`${process.env.PORTFOLIO_ENDPOINT}`);
+        expect(url).toEqual(`${process.env.API_BASE_URL}${process.env.PORTFOLIO_ENDPOINT}`);
         expect(params.method).toBe('POST');
         const body = JSON.parse(params.body);
         expect(body['risk']).toBe(risk);
